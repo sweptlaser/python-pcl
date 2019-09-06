@@ -712,30 +712,11 @@ else:
             vtk_library_dir = os.path.join('/usr/local/Cellar/vtk', vtk_version, 'lib')
         pass
     else:
-        # pcl 1.7.0?(Ubuntu 14.04)
-        # vtk_version = '5.8'
-        # ext_args['include_dirs'].append('/usr/include/vtk-' + vtk_version)
-        # ext_args['library_dirs'].append('/usr/lib')
-        # pcl 1.7.2(Ubuntu 16.04)(xenial)
-        if pcl_version == '-1.7':
-            vtk_version = '6.2'
+        vtk_library_dir = os.path.join('/usr/lib')
+        VTK_SUPPORTED = ["8.1", "7.1", "7.0", "6.2"]    # in order of preference
+        for vtk_version in VTK_SUPPORTED:
             vtk_include_dir = os.path.join('/usr/include/vtk-' + vtk_version)
-            vtk_library_dir = os.path.join('/usr/lib')
-        elif pcl_version == '-1.8':
-            # pcl 1.8.0/1?(Ubuntu 18.04)(melodic)
-            vtk_version = '7.0'
-            # pcl 1.8.1?
-            # vtk_version = '8.0'
-            vtk_include_dir = os.path.join('/usr/include/vtk-' + vtk_version)
-            vtk_library_dir = os.path.join('/usr/lib')
-        elif pcl_version == '-1.9':
-            # pcl 1.9.1
-            # build install?
-            vtk_version = '8.1'
-            vtk_include_dir = os.path.join('/usr/include/vtk-' + vtk_version)
-            vtk_library_dir = os.path.join('/usr/lib')
-        else:
-            pass
+            if os.path.exists(vtk_include_dir): break
 
     # other
     # pcl 1.9.1(Conda)
