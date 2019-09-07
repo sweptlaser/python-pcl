@@ -7,7 +7,13 @@ from libcpp.vector cimport vector
 # main
 cimport pcl_defs as cpp
 
-# from boost_shared_ptr cimport shared_ptr
+from boost_shared_ptr cimport shared_ptr
+
+cdef extern from "pcl/io/pcd_io.h" namespace "pcl" nogil:
+    cdef cppclass PCDReader:
+        PCDReader() except +
+        int read [PointT](string &file_name, cpp.PointCloud[PointT] &cloud, int offset = 0) except +
+ctypedef shared_ptr[PCDReader] PCDReaderPtr_t
 
 cdef extern from "pcl/io/pcd_io.h" namespace "pcl::io":
     # Template 
