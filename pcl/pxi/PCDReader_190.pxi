@@ -47,3 +47,8 @@ cdef class PCDReader:
         ret['data_type'] = data_type
         ret['data_idx'] = data_idx
         return ret
+    
+    def readBodyBinary(self, bytes data, PCLPointCloud2 pc not None, int pcd_version, bool compressed, unsigned int data_idx):
+        cdef int ok = -1
+        ok = self.thisptr().readBodyBinary (<const unsigned char *> data, deref(pc.thisptr()), pcd_version, compressed, data_idx)
+        return ok
