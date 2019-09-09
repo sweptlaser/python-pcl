@@ -20,8 +20,9 @@ cdef class PCDReader:
     def __repr__(self):
         return "<PCDReader>"
 
-    def read(self, str filename, PointCloud pc not None):
+    def read(self, str filename, PointCloudTypes pc):
         cdef int ok = -1
         cdef bytes b_filename = filename.encode("UTF-8")
+        if pc is None: return ok
         ok = self.thisptr().read (string(b_filename), deref(pc.thisptr()))
         return ok

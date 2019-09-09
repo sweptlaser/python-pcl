@@ -106,6 +106,13 @@ cdef class PointCloud_PointNormal:
         # Shortcut to get raw pointer to underlying PointCloud<PointNormal>.
         return self.thisptr_shared.get()
 
+ctypedef fused PointCloudTypes:
+    PointCloud
+    PointCloud_PointXYZI
+    PointCloud_PointXYZRGB
+    PointCloud_PointXYZRGBA
+    PointCloud_PointWithViewpoint
+    PointCloud_PointNormal
 
 # class override(PolygonMesh)
 # cdef class PolygonMesh:

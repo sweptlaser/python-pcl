@@ -278,10 +278,6 @@ cdef extern from "pcl/point_cloud.h" namespace "pcl" nogil:
 ###
 
 # point_types.h
-# use cython type ?
-# ctypedef fused PointCloudTypes:
-#     PointXYZ
-#     PointXYZRGBA
 cdef extern from "pcl/point_types.h" namespace "pcl" nogil:
     cdef struct PointXYZ:
         PointXYZ()
