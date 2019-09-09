@@ -132,6 +132,7 @@ CythonCoordinateFrame_Type = _CythonCoordinateFrame_Type()
 include "pxi/pxiInclude_190.pxi"
 
 include "pxi/PCDReader_190.pxi"
+include "pxi/PCLPointCloud2_180.pxi"
 include "pxi/PointCloud_PointXYZ_190.pxi"
 include "pxi/PointCloud_PointXYZI_180.pxi"
 include "pxi/PointCloud_PointXYZRGB_180.pxi"
