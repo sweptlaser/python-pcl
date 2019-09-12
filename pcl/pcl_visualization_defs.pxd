@@ -3133,6 +3133,9 @@ cdef extern from "pcl/visualization/window.h" namespace "pcl::visualization" nog
         # registerMouseCallback (void (T::*callback) (const pcl::visualization::MouseEvent&, void*), T& instance, void* cookie = NULL)
 
 
+cdef extern from "typedeferral.h":
+    bool pcl_visualization_PCLVisualizer_addPointCloud [PointCloudPtrT] (PCLVisualizer &visual, const PointCloudPtrT &cloud, string id, int viewport)
+
 ###
 
 ###############################################################################
