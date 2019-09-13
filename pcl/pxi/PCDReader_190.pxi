@@ -21,12 +21,24 @@ cdef class PCDReader:
     def __repr__(self):
         return "<PCDReader>"
 
-    def read(self, str filename, PointCloudTypes pc):
+    def _read_PointCloudTypes(self, str filename, PointCloudTypes pc):
         cdef int ok = -1
         cdef bytes b_filename = filename.encode("UTF-8")
         if pc is None: return ok
         ok = self.thisptr().read (string(b_filename), deref(pc.thisptr()))
         return ok
+    
+    def _read_PCLPointCloud2(self, str filename, PCLPointCloud2 pc not None):
+        cdef int ok = -1
+        cdef bytes b_filename = filename.encode("UTF-8")
+        ok = self.thisptr().read (string(b_filename), deref(pc.thisptr()))
+        return ok
+    
+    def read(self, str filename, pc not None):
+        if isinstance(pc, PCLPointCloud2):
+            self._read_PCLPointCloud2(filename, pc)
+        else:
+            self._read_PointCloudTypes(filename, pc)
     
     def readHeader(self, bytes data, PCLPointCloud2 pc not None):
         cdef int ok = -1
