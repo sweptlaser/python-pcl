@@ -5,8 +5,6 @@ from libcpp cimport bool
 from libcpp.vector cimport vector
 from stream cimport istream
 
-cimport pcl_PCLPointCloud2_180 as pcl_pc2
-
 # main
 cimport pcl_defs as cpp
 
@@ -15,10 +13,10 @@ from boost_shared_ptr cimport shared_ptr
 cdef extern from "pcl/io/pcd_io.h" namespace "pcl" nogil:
     cdef cppclass PCDReader:
         PCDReader() except +
-        int read (string &file_name, pcl_pc2.PCLPointCloud2 &cloud, int offset = 0) except +
+        int read (string &file_name, cpp.PCLPointCloud2 &cloud, int offset = 0) except +
         int read [PointT](string &file_name, cpp.PointCloud[PointT] &cloud, int offset = 0) except +
-        int readHeader (istream &binary_istream, pcl_pc2.PCLPointCloud2 &cloud, cpp.Vector4f &origin, cpp.Quaternionf &orientation, int &pcd_version, int &data_type, unsigned int &data_idx) except +
-        int readBodyBinary (const unsigned char * data, pcl_pc2.PCLPointCloud2 &cloud, int pcd_version, bool compressed, unsigned int data_idx) except +
+        int readHeader (istream &binary_istream, cpp.PCLPointCloud2 &cloud, cpp.Vector4f &origin, cpp.Quaternionf &orientation, int &pcd_version, int &data_type, unsigned int &data_idx) except +
+        int readBodyBinary (const unsigned char * data, cpp.PCLPointCloud2 &cloud, int pcd_version, bool compressed, unsigned int data_idx) except +
 ctypedef shared_ptr[PCDReader] PCDReaderPtr_t
 
 cdef extern from "pcl/io/pcd_io.h" namespace "pcl::io":

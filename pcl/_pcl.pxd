@@ -114,6 +114,16 @@ ctypedef fused PointCloudTypes:
     PointCloud_PointWithViewpoint
     PointCloud_PointNormal
 
+
+# class override(PCLPointCloud2)
+cdef class PCLPointCloud2:
+    cdef cpp.PCLPointCloud2Ptr_t thisptr_shared   # PCLPointCloud2
+    
+    cdef inline cpp.PCLPointCloud2 *thisptr(self) nogil:
+        # Shortcut to get raw pointer to underlying PCLPointCloud2.
+        return self.thisptr_shared.get()
+
+
 # class override(PolygonMesh)
 # cdef class PolygonMesh:
 #     cdef cpp.PolygonMeshPtr_t thisptr_shared     # 

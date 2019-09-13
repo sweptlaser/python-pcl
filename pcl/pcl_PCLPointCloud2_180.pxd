@@ -67,29 +67,6 @@ ctypedef shared_ptr[const PCLPointField] PCLPointFieldConstPtr_t
 ###
 
 
-######
-# namespace pcl
-cdef extern from "pcl/PCLPointCloud2.h" namespace "pcl":
-    cdef cppclass PCLPointCloud2:
-        PointCloud2 ()
-        PCLHeader header
-        unsigned int height
-        unsigned int width
-        vector[PCLPointField] fields
-        unsigned char is_bigendian
-        unsigned int point_step
-        unsigned int row_step
-        vector[unsigned char] data
-        unsigned char is_dense
-
-# inline std::ostream& operator<<(std::ostream& s, const  ::pcl::PCLPointCloud2 &v)
-
-ctypedef shared_ptr[PCLPointCloud2] PCLPointCloud2Ptr_t
-# ctypedef shared_ptr[const PCLPointCloud2] PCLPointCloud2ConstPtr_t
-# ctypedef cpp.PointCloud[PCLPointCloud2] PointCloud_PCLPointCloud2_t
-# ctypedef shared_ptr[cpp.PointCloud[PCLPointCloud2]] PointCloud_PCLPointCloud2Ptr_t
-###
-
 # pcl/conversions.h
 # namespace pcl
 # name space detail

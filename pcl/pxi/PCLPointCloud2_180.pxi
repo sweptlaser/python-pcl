@@ -5,9 +5,6 @@ cimport numpy as cnp
 
 cnp.import_array()
 
-# 
-cimport pcl_PCLPointCloud2_180 as pcl_pc2
-
 # parts
 cimport pcl_features_180 as pcl_ftr
 cimport pcl_filters_180 as pcl_fil
@@ -35,7 +32,7 @@ cdef extern from "ProjectInliers.h":
 # cdef PointCloud2 _pc_tmp_pointcloud2 = PointCloud2(np.array([[1, 2, 3],
 #                                                [4, 5, 6]], dtype=np.float32))
 # 
-# cdef pcl_pc2.PCLPointCloud2 *p_pointcloud2 = _pc_tmp_pointcloud2.thisptr()
+# cdef cpp.PCLPointCloud2 *p_pointcloud2 = _pc_tmp_pointcloud2.thisptr()
 # _strides_pointcloud2[0] = (  <Py_ssize_t><void *>idx.getptr(p_pointcloud2, 1)
 #                - <Py_ssize_t><void *>idx.getptr(p_pointcloud2, 0))
 # _strides_pointcloud2[1] = (  <Py_ssize_t><void *>&(idx.getptr(p_pointcloud2, 0).y)
@@ -51,17 +48,11 @@ cdef class PCLPointCloud2:
 
     To load a point cloud from disk, use pcl.load.
     """
-    cdef pcl_pc2.PCLPointCloud2Ptr_t thisptr_shared     # XYZ
-    
-    cdef inline pcl_pc2.PCLPointCloud2 *thisptr(self) nogil:
-        # Shortcut to get raw pointer to underlying PCLPointCloud2.
-        return self.thisptr_shared.get()
-
     def __cinit__(self, init=None):
         cdef PCLPointCloud2 other
         
         # TODO: NG --> import pcl --> pyd Error(python shapedptr/C++ shard ptr collusion?)
-        sp_assign(self.thisptr_shared, new pcl_pc2.PCLPointCloud2())
+        sp_assign(self.thisptr_shared, new cpp.PCLPointCloud2())
         
         if init is None:
             return
