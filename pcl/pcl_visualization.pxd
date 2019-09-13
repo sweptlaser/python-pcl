@@ -6,6 +6,7 @@ cimport vtk_defs as vtk
 
 from libc.stddef cimport size_t
 
+from boost_shared_ptr cimport shared_ptr
 from libcpp.vector cimport vector
 from libcpp.string cimport string
 from libcpp cimport bool
@@ -24,12 +25,12 @@ cdef class PointCloudColorHandleringCustom:
 
 # class override(PointCloud)
 cdef class PointCloudColorHandleringGenericField:
-    cdef pcl_vis.PointCloudColorHandlerGenericField_Ptr_t thisptr_shared     # PointCloudColorHandlerGenericField[PointXYZ]
+    cdef shared_ptr[void] thisptr_shared     # PointCloudColorHandlerGenericField[PointT]
     
     # pcl_visualization_defs
     cdef inline pcl_vis.PointCloudColorHandlerGenericField[cpp.PointXYZ] *thisptr(self) nogil:
         # Shortcut to get raw pointer to underlying PointCloudColorHandlerGenericField<PointXYZ>.
-        return self.thisptr_shared.get()
+        return <pcl_vis.PointCloudColorHandlerGenericField[cpp.PointXYZ] *> self.thisptr_shared.get()
 
 ctypedef fused PointCloudColorHandleringTypes:
     PointCloudColorHandleringCustom

@@ -18,4 +18,11 @@ pcl_visualization_PCLVisualizer_addPointCloud(PCLVisualizer& visual,
   return visual.addPointCloud<typename PointCloudPtrT::element_type::value_type> (cloud, id, viewport);
 }
 
+template <typename PointCloudPtrT>
+inline PointCloudColorHandlerGenericField<typename PointCloudPtrT::element_type::value_type>*
+pcl_visualization_newPointCloudColorHandlerGenericField (const PointCloudPtrT &cloud, const std::string &field)
+{
+  return new PointCloudColorHandlerGenericField<typename PointCloudPtrT::element_type::value_type>(cloud, field);
+}
+
 #endif
