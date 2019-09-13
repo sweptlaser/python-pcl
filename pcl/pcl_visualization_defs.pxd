@@ -1103,6 +1103,7 @@ cdef extern from "pcl/visualization/pcl_visualizer.h" namespace "pcl::visualizat
         # bool addPointCloud [PointT](const shared_ptr[cpp.PointCloud[PointT]] &cloud, const PointCloudColorHandlerHSVField[PointT] color_handler, const string &id, int viewport)
         # bool addPointCloud [PointT](const shared_ptr[cpp.PointCloud[PointT]] &cloud, const PointCloudColorHandlerRandom[PointT] color_handler, const string &id, int viewport)
         # bool addPointCloud [PointT](const shared_ptr[cpp.PointCloud[PointT]] &cloud, const PointCloudColorHandlerRGBField[PointT] color_handler, const string &id, int viewport)
+        bool addPointCloud_ColorHandler "addPointCloud" [PointT](const shared_ptr[cpp.PointCloud[PointT]] &cloud, const PointCloudColorHandlerGenericField[PointT] &color_handler, const string &id, int viewport)
         bool addPointCloud_ColorHandler "addPointCloud" [PointT](const shared_ptr[cpp.PointCloud[PointT]] &cloud, const PointCloudColorHandlerCustom[PointT] &color_handler, const string &id, int viewport)
         
         # brief Add a Point Cloud (templated) to screen.
