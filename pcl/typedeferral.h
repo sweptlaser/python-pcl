@@ -7,6 +7,7 @@
  *     ret function[PointT](PointCloud<PointT>& var)
  */
 
+using namespace pcl;
 using namespace pcl::visualization;
 
 template <typename PointCloudPtrT>
@@ -23,6 +24,17 @@ inline PointCloudColorHandlerGenericField<typename PointCloudPtrT::element_type:
 pcl_visualization_newPointCloudColorHandlerGenericField (const PointCloudPtrT &cloud, const std::string &field)
 {
   return new PointCloudColorHandlerGenericField<typename PointCloudPtrT::element_type::value_type>(cloud, field);
+}
+
+template <typename PointCloudPtrT, template<typename> typename PointCloudColorHandlerT>
+inline bool
+pcl_visualization_PCLVisualizer_addPointCloud(PCLVisualizer& visual,
+                                              const PointCloudPtrT &cloud,
+                                              const PointCloudColorHandlerT<PointXYZ> &color_handler,
+                                              const std::string &id = "cloud", int viewport = 0)
+{
+  const PointCloudColorHandlerT<typename PointCloudPtrT::element_type::value_type> &ch = reinterpret_cast<const PointCloudColorHandlerT<typename PointCloudPtrT::element_type::value_type> &>(color_handler);
+  return visual.addPointCloud<typename PointCloudPtrT::element_type::value_type> (cloud, ch, id, viewport);
 }
 
 #endif
