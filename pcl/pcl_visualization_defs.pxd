@@ -473,6 +473,9 @@ ctypedef shared_ptr[PointCloudColorHandlerHSVField[cpp.PointXYZRGBA]] PointCloud
 # template <typename PointT>
 # class PointCloudColorHandlerGenericField : public PointCloudColorHandler<PointT>
 cdef extern from "pcl/visualization/point_cloud_handlers.h" namespace "pcl::visualization" nogil:
+    cdef cppclass PointCloudColorHandlerGenericField_PCLPointCloud2 "PointCloudColorHandlerGenericField<pcl::PCLPointCloud2>" (PointCloudColorHandler[cpp.PCLPointCloud2]):
+        PointCloudColorHandlerGenericField_PCLPointCloud2 (const shared_ptr[cpp.PCLPointCloud2] &cloud, const string &field_name)
+    
     cdef cppclass PointCloudColorHandlerGenericField[PointT](PointCloudColorHandler[PointT]):
         PointCloudColorHandlerGenericField ()
         # /** \brief Constructor. */
