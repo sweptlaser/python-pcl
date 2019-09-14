@@ -16,12 +16,12 @@ cimport pcl_defs as cpp
 
 # class override(PointCloud)
 cdef class PointCloudColorHandleringCustom:
-    cdef pcl_vis.PointCloudColorHandlerCustom_Ptr_t thisptr_shared     # PointCloudColorHandlerCustom[PointXYZ]
+    cdef shared_ptr[void] thisptr_shared     # PointCloudColorHandlerCustom[PointT]
     
     # pcl_visualization_defs
     cdef inline pcl_vis.PointCloudColorHandlerCustom[cpp.PointXYZ] *thisptr(self) nogil:
         # Shortcut to get raw pointer to underlying PointCloudColorHandlerCustom<PointXYZ>.
-        return self.thisptr_shared.get()
+        return <pcl_vis.PointCloudColorHandlerCustom[cpp.PointXYZ] *> self.thisptr_shared.get()
 
 # class override(PointCloud)
 cdef class PointCloudColorHandleringGenericField:

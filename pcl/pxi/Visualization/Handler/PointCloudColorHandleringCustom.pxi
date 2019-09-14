@@ -20,7 +20,7 @@ cdef class PointCloudColorHandleringCustom:
 
     # void sp_assign[T](shared_ptr[T] &p, T *value)
     def __cinit__(self, _pcl.PointCloud pc, int r, int g, int b):
-        sp_assign(self.thisptr_shared, new pcl_vis.PointCloudColorHandlerCustom[cpp.PointXYZ](pc.thisptr_shared, r, g, b))
+        sp_assign(self.thisptr_shared, <void*> new pcl_vis.PointCloudColorHandlerCustom[cpp.PointXYZ](pc.thisptr_shared, r, g, b))
         pass
 
     # def __cinit__(self, _pcl.RangeImages rangeImage, int r, int g, int b):
