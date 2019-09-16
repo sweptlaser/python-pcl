@@ -40,17 +40,21 @@ cdef class PCDReader:
         else:
             self._read_PointCloudTypes(filename, pc)
     
-    def readHeader(self, bytes data, PCLPointCloud2 pc not None):
+    def readHeader(self, data, PCLPointCloud2 pc not None):
         cdef int ok = -1
         cdef int pcd_version = 0
         cdef int data_type = 0
         cdef unsigned int data_idx = 0
-        cdef stream.bufferstream* bufstream = new stream.bufferstream(<char*>data, len(data))
+        cdef stream.bufferstream* bufstream
         cdef cpp.Vector4f origin
         cdef cpp.Quaternionf orientation
-        ok = self.thisptr().readHeader (<stream.istream&> deref(bufstream), deref(pc.thisptr()),
-            origin, orientation, pcd_version, data_type, data_idx)
-        del bufstream
+        if isinstance(data, str):
+            ok = self.thisptr().readHeader (<string> data.encode("UTF-8"), deref(pc.thisptr()),
+                origin, orientation, pcd_version, data_type, data_idx)
+        else:
+            bufstream = new stream.bufferstream(<char*>data, len(data))
+            ok = self.thisptr().readHeader (<stream.istream&> deref(bufstream), deref(pc.thisptr()),
+                origin, orientation, pcd_version, data_type, data_idx)
         if ok != 0: return None
         ret = {}
         ret['origin'] = np.array([origin.data()[0], origin.data()[1], origin.data()[2]])

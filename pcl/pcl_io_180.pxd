@@ -16,6 +16,7 @@ cdef extern from "pcl/io/pcd_io.h" namespace "pcl" nogil:
         int read (string &file_name, cpp.PCLPointCloud2 &cloud, int offset = 0) except +
         int read [PointT](string &file_name, cpp.PointCloud[PointT] &cloud, int offset = 0) except +
         int readHeader (istream &binary_istream, cpp.PCLPointCloud2 &cloud, cpp.Vector4f &origin, cpp.Quaternionf &orientation, int &pcd_version, int &data_type, unsigned int &data_idx) except +
+        int readHeader (string &file_name, cpp.PCLPointCloud2 &cloud, cpp.Vector4f &origin, cpp.Quaternionf &orientation, int &pcd_version, int &data_type, unsigned int &data_idx) except +
         int readBodyBinary (const unsigned char * data, cpp.PCLPointCloud2 &cloud, int pcd_version, bool compressed, unsigned int data_idx) except +
 ctypedef shared_ptr[PCDReader] PCDReaderPtr_t
 
