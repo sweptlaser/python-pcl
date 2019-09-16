@@ -28,6 +28,12 @@ cimport vtk_defs as vtk
 # point_cloud_handlers.h -> point_cloud_color_handlers.h(1.7.2)
 # template <typename PointT>
 # class PointCloudColorHandler
+
+cdef extern from "pcl/visualization/point_cloud_handlers.h" namespace "pcl::visualization" nogil:
+    cdef cppclass PointCloudColorHandler_PCLPointCloud2 "PointCloudColorHandler<pcl::PCLPointCloud2>":
+        PointCloudColorHandler_PCLPointCloud2(shared_ptr[const cpp.PCLPointCloud2] &cloud)
+ctypedef shared_ptr[PointCloudColorHandler_PCLPointCloud2] PointCloudColorHandler_PCLPointCloud2_Ptr_t
+
 cdef extern from "pcl/visualization/point_cloud_handlers.h" namespace "pcl::visualization" nogil:
     cdef cppclass PointCloudColorHandler[T]:
         # brief Constructor.
@@ -1210,6 +1216,7 @@ cdef extern from "pcl/visualization/pcl_visualizer.h" namespace "pcl::visualizat
         #                const Eigen::Vector4f& sensor_origin,
         #                const Eigen::Quaternion<float>& sensor_orientation,
         #                const std::string &id = "cloud", int viewport = 0);
+        bool addPointCloud_PCLPointCloud2 "addPointCloud" (const shared_ptr[cpp.PCLPointCloud2] &cloud, const PointCloudColorHandler_PCLPointCloud2_Ptr_t &color_handler, const cpp.Vector4f& sensor_origin, const cpp.Quaternionf& sensor_orientation, const string &id, int viewport)
         ### addPointCloud
         
         # /** \brief Add a PolygonMesh object to screen
@@ -3142,7 +3149,7 @@ cdef extern from "typedeferral.h":
     bool pcl_visualization_PCLVisualizer_addPointCloud [PointCloudPtrT] (PCLVisualizer &visual, const PointCloudPtrT &cloud, const PointCloudColorHandlerCustom[cpp.PointXYZ] &color_handler, string id, int viewport)
     bool pcl_visualization_PCLVisualizer_addPointCloud [PointCloudPtrT] (PCLVisualizer &visual, const PointCloudPtrT &cloud, const PointCloudColorHandlerGenericField[cpp.PointXYZ] &color_handler, string id, int viewport)
     void* pcl_visualization_newPointCloudColorHandlerGenericField [PointCloudPtrT] (PointCloudPtrT &cloud, const string &field)
-    bool pcl_visualization_PCLVisualizer_addPointCloud (PCLVisualizer &visual, const shared_ptr[cpp.PCLPointCloud2] &cloud, const shared_ptr[void]& color_handler, const cpp.Vector4f& sensor_origin, const cpp.Quaternionf& sensor_orientation, const string &id, int viewport)
+    PointCloudColorHandler_PCLPointCloud2_Ptr_t& _to_PointCloudColorHandler_PCLPointCloud2_Ptr_t(shared_ptr[void]& color_handler)
 
 ###
 

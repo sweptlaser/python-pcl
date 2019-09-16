@@ -201,7 +201,7 @@ cdef class PCLVisualizering:
     def AddPointCloudNormals(self, _pcl.PointCloud cloud, _pcl.PointCloud_Normal normal, int level = 100, double scale = 0.02, id = b'normals', int viewport = 0):
         self.thisptr().addPointCloudNormals[cpp.PointXYZ, cpp.Normal](<cpp.PointCloudPtr_t> cloud.thisptr_shared, <cpp.PointCloud_Normal_Ptr_t> normal.thisptr_shared, level, scale, <string> id, viewport)
 
-    def AddPointCloud_PCLPointCloud2(self, _pcl.PCLPointCloud2 cloud, pcl_visualization.PointCloudColorHandleringTypes color_handler, vector[float] origin, vector[float] orientation, id = b'cloud', viewport = 0):
+    def AddPointCloud_PCLPointCloud2(self, _pcl.PCLPointCloud2 cloud, pcl_visualization.PointCloudColorHandleringTypes color_handler, vector[float] origin, vector[float] orientation, id = b'cloud', int viewport = 0):
         cdef cpp.Vector4f _origin = cpp.Vector4f(origin[0], origin[1], origin[2], 0.0)
         cdef cpp.Quaternionf _orientation = cpp.Quaternionf(orientation[0], orientation[1], orientation[2], orientation[3])
         cdef bytes _id
@@ -211,9 +211,9 @@ cdef class PCLVisualizering:
             _id = id
         else:
             raise TypeError("id should be a string, got %r" % id)
-        # Note: this _should_ work without wrapping (with a typecast for color_handler), but for
-        # some reason it results in an error that an aggregate has an incomplete type in the C++
-        pcl_vis.pcl_visualization_PCLVisualizer_addPointCloud(deref(self.thisptr()), cloud.thisptr_shared, color_handler.thisptr_shared, _origin, _orientation, _id, viewport)
+        cdef pcl_vis.PointCloudColorHandler_PCLPointCloud2_Ptr_t _ch
+        _ch = pcl_vis._to_PointCloudColorHandler_PCLPointCloud2_Ptr_t(color_handler.thisptr_shared)
+        self.thisptr().addPointCloud_PCLPointCloud2(cloud.thisptr_shared, _ch, _origin, _orientation, _id, viewport)
 
     def SetPointCloudRenderingProperties(self, int propType, int propValue, propName = b'cloud'):
         self.thisptr().setPointCloudRenderingProperties (propType, propValue, <string> propName, 0)

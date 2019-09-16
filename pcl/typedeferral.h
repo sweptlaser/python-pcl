@@ -39,16 +39,10 @@ pcl_visualization_PCLVisualizer_addPointCloud(PCLVisualizer& visual,
   return visual.addPointCloud<typename PointCloudPtrT::element_type::value_type> (cloud, ch, id, viewport);
 }
 
-inline bool
-pcl_visualization_PCLVisualizer_addPointCloud(PCLVisualizer& visual,
-                                              const pcl::PCLPointCloud2::ConstPtr &cloud,
-                                              const boost::shared_ptr<void> &color_handler,
-                                              const Eigen::Vector4f& sensor_origin,
-                                              const Eigen::Quaternion<float>& sensor_orientation,
-                                              const std::string &id = "cloud", int viewport = 0)
+inline boost::shared_ptr<PointCloudColorHandler<PCLPointCloud2>>&
+_to_PointCloudColorHandler_PCLPointCloud2_Ptr_t(boost::shared_ptr<void>& color_handler)
 {
-  const boost::shared_ptr<PointCloudColorHandler<PCLPointCloud2>>& ch = reinterpret_cast<const boost::shared_ptr<PointCloudColorHandler<PCLPointCloud2>>&>(color_handler);
-  return visual.addPointCloud(cloud, ch, sensor_origin, sensor_orientation, id, viewport);
+  return reinterpret_cast<boost::shared_ptr<PointCloudColorHandler<PCLPointCloud2>>&>(color_handler);
 }
 
 #endif
