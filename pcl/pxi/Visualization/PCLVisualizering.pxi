@@ -275,8 +275,10 @@ cdef class PCLVisualizering:
         pass
 
     def get_render_window(self):
-        # return self.thisptr().getRenderWindow()
-        pass
+        cdef vtk.vtkSmartPointer[vtk.vtkRenderWindow] temp = self.thisptr().getRenderWindow()
+        converted_PY = vtk_defs.convertSmartPointer(temp)
+
+        return <object>converted_PY
 
     # int property, double value, const string id, int viewport
     def set_shape_rendering_properties(self, property, value, id, viewport=0):

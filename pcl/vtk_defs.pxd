@@ -1,3 +1,4 @@
+from cpython.ref cimport PyObject
 # vtkObjectBase
 # class VTKCOMMONCORE_EXPORT vtkObjectBase
 cdef extern from "vtkObjectBase.h" nogil:
@@ -1757,3 +1758,8 @@ cdef extern from "vtkRenderWindowInteractor.h" nogil:
 
 
 ###
+
+ctypedef vtkSmartPointer[vtkRenderWindow] vtkSmartPointerPtrT
+
+cdef extern from "vtk_convert.h":
+    PyObject* convertSmartPointer(const vtkSmartPointerPtrT &smartPointer)
