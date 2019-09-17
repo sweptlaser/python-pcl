@@ -510,6 +510,11 @@ if platform.system() == "Windows":
             # win_kit_10_version = '10.0.15063.0'
             # win_kit_incs = ['C:\\Program Files (x86)\\Windows Kits\\10\\Include\\' + win_kit_10_version+ '\\ucrt', 'C:\\Program Files (x86)\\Windows Kits\\10\\Include\\' + win_kit_10_version + '\\um']
             # win_kit_libdirs = ['C:\\Program Files (x86)\\Windows Kits\\10\\Include\\' + win_kit_10_version + '\\ucrt\\x64', 'C:\\Program Files (x86)\\Windows Kits\\10\\Include\\' + win_kit_10_version + '\\um\\x64']
+            win_kit_incs = [
+                'C:\\Program Files (x86)\\Windows Kits\\8.1\\Include\\shared',
+                'C:\\Program Files (x86)\\Windows Kits\\8.1\\Include\\ucrt',
+                'C:\\Program Files (x86)\\Windows Kits\\8.1\\Include\\um',
+            ]
             pass
         else:
             pass
