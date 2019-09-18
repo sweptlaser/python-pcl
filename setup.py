@@ -628,12 +628,16 @@ if platform.system() == "Windows":
         print('no pcl install or pkg-config missed.')
         sys.exit(1)
 
+    # add the OpenNI2 DLL to the package
+    libreleases.append('OpenNI2')
+
     # copy the pcl dll to local subfolder so that it can be added to the package through the data_files option
     listDlls = []
     if not os.path.isdir('./dlls'):
         os.mkdir('./dlls')
     path = os.environ['PATH']
     os.environ['PATH'] += ';{}\\bin'.format(os.environ['PCL_ROOT'])
+    os.environ['PATH'] += ';{}'.format(os.environ['OPENNI2_REDIST64'])
     for dll in libreleases:
         pathDll = find_library(dll)
         if not pathDll is None:
