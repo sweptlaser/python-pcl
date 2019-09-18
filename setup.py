@@ -6,6 +6,7 @@ from distutils.core import setup
 from distutils.extension import Extension
 # from Cython.Build import cythonize    # MacOS NG
 from setuptools import setup, find_packages, Extension
+from version import VERSION
 
 import subprocess
 import numpy
@@ -862,7 +863,7 @@ else:
 setup(name='python-pcl',
       description='Python bindings for the Point Cloud Library (PCL). using Cython.',
       url='http://github.com/strawlab/python-pcl',
-      version='0.3.0rc1',
+      version=VERSION,
       author='John Stowers',
       author_email='john.stowers@gmail.com',
       maintainer='Tooru Oonuma',
