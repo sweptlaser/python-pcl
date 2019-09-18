@@ -632,11 +632,14 @@ if platform.system() == "Windows":
     listDlls = []
     if not os.path.isdir('./dlls'):
         os.mkdir('./dlls')
+    path = os.environ['PATH']
+    os.environ['PATH'] += ';{}\\bin'.format(os.environ['PCL_ROOT'])
     for dll in libreleases:
         pathDll = find_library(dll)
         if not pathDll is None:
             shutil.copy2(pathDll, './dlls')
             listDlls.append(os.path.join('.\\dlls', dll+'.dll'))
+    os.environ['PATH'] = path
     # the path is relative to the python root folder
     data_files = [('Lib/site-packages/pcl', listDlls)]
 
