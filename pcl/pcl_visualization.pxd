@@ -16,7 +16,7 @@ cimport pcl_defs as cpp
 
 # class override(PointCloud)
 cdef class PointCloudColorHandleringCustom:
-    cdef shared_ptr[void] thisptr_shared     # PointCloudColorHandlerCustom[PointT]
+    cdef cpp.shared_bare_ptr thisptr_shared     # PointCloudColorHandlerCustom[PointT]
     
     # pcl_visualization_defs
     cdef inline pcl_vis.PointCloudColorHandlerCustom[cpp.PointXYZ] *thisptr(self) nogil:
@@ -25,7 +25,7 @@ cdef class PointCloudColorHandleringCustom:
 
 # class override(PointCloud)
 cdef class PointCloudColorHandleringGenericField:
-    cdef shared_ptr[void] thisptr_shared     # PointCloudColorHandlerGenericField[PointT]
+    cdef cpp.shared_bare_ptr thisptr_shared     # PointCloudColorHandlerGenericField[PointT]
     
     # pcl_visualization_defs
     cdef inline pcl_vis.PointCloudColorHandlerGenericField[cpp.PointXYZ] *thisptr(self) nogil:

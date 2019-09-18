@@ -7,6 +7,10 @@ from libcpp cimport bool
 
 from boost_shared_ptr cimport shared_ptr
 
+# this is a special pointer for working in situations where we will typecast in and out
+# (this "should" be shared_ptr[void], but that does not work on Windows for some reason)
+ctypedef shared_ptr[int] shared_bare_ptr
+
 # Eigen
 from eigen cimport Vector4f
 from eigen cimport Quaternionf

@@ -3149,7 +3149,7 @@ cdef extern from "typedeferral.h":
     bool pcl_visualization_PCLVisualizer_addPointCloud [PointCloudPtrT] (PCLVisualizer &visual, const PointCloudPtrT &cloud, const PointCloudColorHandlerCustom[cpp.PointXYZ] &color_handler, string id, int viewport)
     bool pcl_visualization_PCLVisualizer_addPointCloud [PointCloudPtrT] (PCLVisualizer &visual, const PointCloudPtrT &cloud, const PointCloudColorHandlerGenericField[cpp.PointXYZ] &color_handler, string id, int viewport)
     void* pcl_visualization_newPointCloudColorHandlerGenericField [PointCloudPtrT] (PointCloudPtrT &cloud, const string &field)
-    PointCloudColorHandler_PCLPointCloud2_Ptr_t& _to_PointCloudColorHandler_PCLPointCloud2_Ptr_t(shared_ptr[void]& color_handler)
+    PointCloudColorHandler_PCLPointCloud2_Ptr_t& _to_PointCloudColorHandler_PCLPointCloud2_Ptr_t(cpp.shared_bare_ptr& color_handler)
 
 ###
 

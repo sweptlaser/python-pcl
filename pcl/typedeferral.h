@@ -40,7 +40,7 @@ pcl_visualization_PCLVisualizer_addPointCloud(PCLVisualizer& visual,
 }
 
 inline boost::shared_ptr<PointCloudColorHandler<PCLPointCloud2>>&
-_to_PointCloudColorHandler_PCLPointCloud2_Ptr_t(boost::shared_ptr<void>& color_handler)
+_to_PointCloudColorHandler_PCLPointCloud2_Ptr_t(boost::shared_ptr<int>& color_handler)
 {
   return reinterpret_cast<boost::shared_ptr<PointCloudColorHandler<PCLPointCloud2>>&>(color_handler);
 }

@@ -111,8 +111,9 @@ ctypedef fused PointCloudTypes:
     PointCloud_PointXYZI
     PointCloud_PointXYZRGB
     PointCloud_PointXYZRGBA
-    PointCloud_PointWithViewpoint
     PointCloud_PointNormal
+    # TODO: figure out why this breaks on Windows
+    #PointCloud_PointWithViewpoint
 
 
 # class override(PCLPointCloud2)
