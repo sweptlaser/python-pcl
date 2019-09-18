@@ -631,6 +631,9 @@ if platform.system() == "Windows":
     # add the OpenNI2 DLL to the package
     libreleases.append('OpenNI2')
 
+    # add the boost_python DLL to the package
+    libreleases.append('boost_python37')
+
     # copy the pcl dll to local subfolder so that it can be added to the package through the data_files option
     listDlls = []
     if not os.path.isdir('./dlls'):
