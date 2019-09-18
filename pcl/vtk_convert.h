@@ -1,15 +1,12 @@
 #ifndef _VTK_CONVERT_CPP__
 #define _VTK_CONVERT_CPP__
 
-
 #include <iostream>
 #include <sstream>
 #include <boost/python.hpp>
 //#include <vtkPythonCompatibility.h>
 #include <boost/python/module.hpp>
 #include <boost/python/stl_iterator.hpp>
-#define NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION //Ignore numpy depracated warnings
-#include <numpy/ndarrayobject.h>
 #define _BACKWARD_BACKWARD_WARNING_H 1 //Ignore vtk deprecated warnings
 #include <vtkSmartPointer.h>
 #include <vtkObjectBase.h>

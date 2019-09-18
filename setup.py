@@ -808,6 +808,7 @@ else:
     # grabber?
     # -lboost_system
     # ext_args['extra_link_args'].append('-lboost_system')
+    ext_args['extra_link_args'].append('-lboost_python-py36')
     # MacOSX?
     # ext_args['extra_link_args'].append('-lboost_system_mt')
     # ext_args['extra_link_args'].append('-lboost_bind')
