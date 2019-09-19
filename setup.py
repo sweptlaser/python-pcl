@@ -142,8 +142,7 @@ if platform.system() == "Windows":
     # custom(WinPcap)
 
     # get pkg-config.exe filePath
-    pkgconfigPath = os.getcwd() + '\\pkg-config\\pkg-config.exe'
-    print(pkgconfigPath)
+    pkgconfigPath = 'pkg-config.exe'
 
     # AppVeyor Check
     for k, v in os.environ.items():
@@ -157,8 +156,7 @@ if platform.system() == "Windows":
         PCL_SUPPORTED = ["-1.9", "-1.8", "-1.7", "-1.6", ""]
 
         for pcl_version in PCL_SUPPORTED:
-            if subprocess.call(['.\\pkg-config\\pkg-config.exe', 'pcl_common%s' % pcl_version]) == 0:
-                # if subprocess.call([pkgconfigPath, 'pcl_common%s' % pcl_version]) == 0:
+            if subprocess.call([pkgconfigPath, 'pcl_common%s' % pcl_version]) == 0:
                 break
         else:
             print("%s: error: cannot find PCL, tried" %
