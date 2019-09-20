@@ -35,8 +35,15 @@ using namespace boost::python;
     std::string address_str = oss.str();
 
     // Can get vtk object type from address string using vtk tricks
-    //boost::python::object obj = import("vtk").attr("vtkObjectBase")(address_str);
-    object obj = import("vtk").attr("vtkObjectBase")(address_str);
+    object obj;
+    try
+    {
+        obj = import("vtk").attr("vtkObjectBase")(address_str);
+    }
+    catch(...)
+    {
+        return NULL;
+    }
 
     // Important to increment object reference
     return incref(obj.ptr());
