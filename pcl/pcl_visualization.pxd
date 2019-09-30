@@ -2,7 +2,7 @@
 # Header for pcl_visualization.pyx functionality that needs sharing with other modules.
 
 cimport pcl_visualization_defs as pcl_vis
-cimport vtk_defs as vtk
+cimport vtk_defs
 
 from libc.stddef cimport size_t
 
@@ -47,11 +47,11 @@ cdef class PointCloudGeometryHandleringCustom:
 
 
 cdef class vtkSmartPointerRenderWindow:
-    # cdef vtk.vtkRenderWindow_Ptr_t thisptr_shared     # vtkRenderWindow
-    cdef vtk.vtkSmartPointer[vtk.vtkRenderWindow] thisptr_shared
+    # cdef vtk_defs.vtkRenderWindow_Ptr_t thisptr_shared     # vtkRenderWindow
+    cdef vtk_defs.vtkSmartPointer[vtk_defs.vtkRenderWindow] thisptr_shared
     
-    # cdef inline vtk.vtkRenderWindow *thisptr(self) nogil:
-    cdef inline vtk.vtkSmartPointer[vtk.vtkRenderWindow] thisptr(self) nogil:
+    # cdef inline vtk_defs.vtkRenderWindow *thisptr(self) nogil:
+    cdef inline vtk_defs.vtkSmartPointer[vtk_defs.vtkRenderWindow] thisptr(self) nogil:
         # Shortcut to get raw pointer to underlying vtkRenderWindow.
         return self.thisptr_shared
 

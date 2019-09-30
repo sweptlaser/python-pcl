@@ -640,7 +640,6 @@ ctypedef shared_ptr[PointCloudColorHandlerGenericField[cpp.PointXYZRGBA]] PointC
 
 ###
 
-
 # pcl_visualizer.h
 # class PCL_EXPORTS PCLVisualizer
 cdef extern from "pcl/visualization/pcl_visualizer.h" namespace "pcl::visualization" nogil:
@@ -652,6 +651,8 @@ cdef extern from "pcl/visualization/pcl_visualizer.h" namespace "pcl::visualizat
         # param[in] create_interactor if true (default), create an interactor, false otherwise
         # PCLVisualizer (const std::string &name = "", const bool create_interactor = true);
         PCLVisualizer (string name, bool create_interactor)
+
+        PCLVisualizer (vtk.vtkSmartPointerRendererPtrT ren, vtk.vtkSmartPointerRenderWindowPtrT win, string name, bool create_interactor)
         
         # brief PCL Visualizer constructor.
         # param[in] argc
@@ -1789,6 +1790,9 @@ cdef extern from "pcl/visualization/pcl_visualizer.h" namespace "pcl::visualizat
         
         # /** \brief Return a pointer to the underlying VTK Render Window used. */
         vtk.vtkSmartPointer[vtk.vtkRenderWindow] getRenderWindow ()
+
+        # /** \brief Return a pointer to the underlying VTK Renderer Collection. */
+        vtk.vtkSmartPointer[vtk.vtkRendererCollection] getRendererCollection ()
         
         # /** \brief Create the internal Interactor object. */
         # void createInteractor ();
@@ -1799,7 +1803,7 @@ cdef extern from "pcl/visualization/pcl_visualizer.h" namespace "pcl::visualizat
         #   * \param[in,out] iren the vtkRenderWindowInteractor object to set up
         #   * \param[in,out] win a vtkRenderWindow object that the interactor is attached to
         # void setupInteractor (vtkRenderWindowInteractor *iren, vtkRenderWindow *win);
-        void setupInteractor (vtk.vtkRenderWindowInteractor& iren, vtk.vtkRenderWindow& win);
+        void setupInteractor (vtk.vtkRenderWindowInteractor* iren, vtk.vtkRenderWindow* win);
         
         # /** \brief Get a pointer to the current interactor style used. */
         # inline vtkSmartPointer<PCLVisualizerInteractorStyle> getInteractorStyle ()

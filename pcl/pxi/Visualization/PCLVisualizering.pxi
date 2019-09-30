@@ -8,10 +8,12 @@ cimport pcl_visualization
 
 cimport pcl_visualization_defs as pcl_vis
 cimport vtk_defs
+import vtk
 
 from libcpp cimport bool
 from libcpp.string cimport string
 from libcpp.vector cimport vector
+from cpython.ref cimport PyObject
 
 from boost_shared_ptr cimport shared_ptr
 from boost_shared_ptr cimport sp_assign
@@ -22,15 +24,71 @@ cdef class PCLVisualizering:
     """
     cdef pcl_vis.PCLVisualizerPtr_t thisptr_shared
 
-    def __cinit__(self, id=b'visual', mode=True):
-        cdef bytes id_ascii
-        if isinstance(id, unicode):
-            id_ascii = id.encode("ascii")
-        elif not isinstance(id, bytes):
-            raise TypeError("id should be a string, got %r" % id)
+    def __cinit_simple__(self, bytes name, bool create_interactor):
+        sp_assign(self.thisptr_shared, new pcl_vis.PCLVisualizer(name, create_interactor))
+
+    def __cinit_renderer__(self, ren, wind, bytes name, bool create_interactor):
+        cdef PyObject *renPy = <PyObject *>ren
+        cdef PyObject *winPy = <PyObject *>wind
+        cdef vtk_defs.vtkSmartPointerRendererPtrT renPtr = vtk_defs.GetVtkSmartPointerRenderer(renPy)
+        cdef vtk_defs.vtkSmartPointerRenderWindowPtrT winPtr= vtk_defs.GetVtkSmartPointerRenderWindow(winPy)
+        sp_assign(self.thisptr_shared, new pcl_vis.PCLVisualizer(renPtr, winPtr, name, create_interactor))
+
+    def __cinit__(self, *pargs, **kwargs):
+        name = b'visual'
+        create_interactor = True
+        ren = None
+        wind = None
+
+        # handle positional arguments
+        if len(pargs) > 0:
+            if isinstance(pargs[0], unicode) or isinstance(pargs[0], bytes):
+                name = pargs[0]
+            elif isinstance(pargs[0], vtk.vtkRenderer):
+                ren = pargs[0]
+            else:
+                raise Exception('Unsupported constructor call')
+        if len(pargs) > 1:
+            if isinstance(pargs[1], int):
+                create_interactor = pargs[1]
+            elif isinstance(pargs[1], vtk.vtkRenderWindow):
+                wind = pargs[1]
+            else:
+                raise Exception('Unsupported constructor call')
+        if len(pargs) > 2:
+            if isinstance(pargs[2], unicode) or isinstance(pargs[2], bytes):
+                name = pargs[2]
+            else:
+                raise Exception('Unsupported constructor call')
+        if len(pargs) > 3:
+            if isinstance(pargs[3], int):
+                create_interactor = pargs[3]
+            else:
+                raise Exception('Unsupported constructor call')
+
+        # handle keyword arguments
+        if 'ren' in kwargs:
+            ren = kwargs['ren']
+        if 'wind' in kwargs:
+            wind = kwargs['wind']
+        if 'name' in kwargs:
+            name = kwargs['name']
+        if 'create_interactor' in kwargs:
+            create_interactor = kwargs['create_interactor']
+
+        # handle argument type conversion
+        cdef bytes _name
+        if isinstance(name, unicode):
+            _name = name.encode("ascii")
+        elif isinstance(name, bytes):
+            _name = name
         else:
-            id_ascii = id
-        sp_assign(self.thisptr_shared, new pcl_vis.PCLVisualizer(id_ascii, mode))
+            raise TypeError("name should be a string, got %r" % name)
+
+        if (ren is None and wind is None):
+            self.__cinit_simple__(_name, create_interactor)
+        else:
+            self.__cinit_renderer__(ren, wind, _name, create_interactor)
 
     cdef inline pcl_vis.PCLVisualizer *thisptr(self) nogil:
         # Shortcut to get raw pointer to underlying PCLVisualizer
@@ -275,7 +333,7 @@ cdef class PCLVisualizering:
         pass
 
     def get_render_window(self):
-        cdef vtk.vtkSmartPointer[vtk.vtkRenderWindow] temp = self.thisptr().getRenderWindow()
+        cdef vtk_defs.vtkSmartPointer[vtk_defs.vtkRenderWindow] temp = self.thisptr().getRenderWindow()
         converted_PY = vtk_defs.convertSmartPointer(temp)
         if converted_PY == NULL:
             return None

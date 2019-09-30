@@ -1756,10 +1756,33 @@ cdef extern from "vtkRenderWindowInteractor.h" nogil:
         # void ClearPointerIndex(int i);
         # //@}
 
-
+cdef extern from "vtkRendererCollection.h" nogil:
+    # cdef cppclass vtkRenderWindowInteractor(vtkObject):
+    cdef cppclass vtkRendererCollection:
+        vtkRendererCollection()
 ###
 
-ctypedef vtkSmartPointer[vtkRenderWindow] vtkSmartPointerPtrT
+cdef extern from "vtkXOpenGLRenderWindow.h" nogil:
+    cdef cppclass vtkXOpenGLRenderWindow:
+        vtkXOpenGLRenderWindow()
+
+ctypedef vtkSmartPointer[vtkRenderWindow] vtkSmartPointerRenderWindowPtrT
+ctypedef vtkSmartPointer[vtkRenderer] vtkSmartPointerRendererPtrT
+ctypedef vtkSmartPointer[vtkRenderWindowInteractor] vtkSmartPointerRenderWindowInteractorPtrT
+ctypedef vtkSmartPointer[vtkRendererCollection] vtkSmartPointerRendererCollectionPtrT
+ctypedef vtkRendererCollection vtkRendererCollectionPtrT
+ctypedef vtkRenderWindow vtkRenderWindowPtrT
+
 
 cdef extern from "vtk_convert.h":
-    PyObject* convertSmartPointer(const vtkSmartPointerPtrT &smartPointer)
+    PyObject* convertSmartPointer(const vtkSmartPointerRenderWindowPtrT &smartPointer)
+    PyObject* convertRenderer(const vtkSmartPointerRendererCollectionPtrT &smartPointer)
+    void* ExtractVtkWrappedPointer(PyObject* pPythonObject) except +
+    vtkSmartPointer[vtkRenderer] GetVtkSmartPointerRenderer(PyObject* pPythonObject) except +
+    vtkSmartPointer[vtkRenderWindow] GetVtkSmartPointerRenderWindow(PyObject* pPythonObject) except +
+    void* GetVtkRenderWindowInteractor(PyObject* pPythonObject) except +
+    void* GetVtkRenderWindow(PyObject* pPythonObject) except +
+
+cdef extern from "vtkVersionMacros.h":
+    cdef int VTK_MAJOR_VERSION
+    cdef int VTK_MINOR_VERSION

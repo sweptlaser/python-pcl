@@ -5,6 +5,16 @@ from libcpp cimport bool
 from collections import Sequence
 import numbers
 import numpy as np
+#cimport vtk_defs
+
+import vtk
+if not (vtk.VTK_MAJOR_VERSION == vtk_defs.VTK_MAJOR_VERSION and vtk.VTK_MINOR_VERSION == vtk_defs.VTK_MINOR_VERSION):
+    raise Exception("VTK Runtime version({}.{}) does not match VTK build version({}.{})".format(vtk.VTK_MAJOR_VERSION,
+                                                                                                vtk.VTK_MINOR_VERSION,
+                                                                                                vtk_defs.VTK_MAJOR_VERSION,
+                                                                                                vtk_defs.VTK_MINOR_VERSION))
+
+
 cimport numpy as cnp
 
 cimport pcl_defs as cpp
