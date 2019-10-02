@@ -4,17 +4,9 @@
 #include <iostream>
 #include <sstream>
 #include <boost/python.hpp>
-//#include <vtkPythonCompatibility.h>
-//#include <boost/python/module.hpp>
-//#include <boost/python/stl_iterator.hpp>
-#define _BACKWARD_BACKWARD_WARNING_H 1 //Ignore vtk deprecated warnings
 #include <vtkSmartPointer.h>
 #include <vtkObjectBase.h>
 #include <vtkRenderWindow.h>
-#include <vtkRenderWindowInteractor.h>
-#include <PyVTKObject.h>
-#include <vtkSmartPyObject.h>
-//#include <vtkPythonUtil.h>
 
 
 using namespace boost::python;
@@ -88,9 +80,55 @@ using namespace boost::python;
 //
 vtkObjectBase* ExtractVtkWrappedPointer(PyObject* pPythonObject)
 {
+    // Get the __this__ attribute from the Python Object
+    char thisStr[] = "__this__";
 
-    vtkObjectBase* test = PyVTKObject_GetObject(pPythonObject);
-    return test;
+    // Several checks to make sure it is a valid vtk type, otherwise return a null pointer
+    if (!PyObject_HasAttrString(pPythonObject, thisStr))
+    {
+        return NULL;
+    }
+
+    PyObject* thisAttr = PyObject_GetAttrString(pPythonObject, thisStr);
+    if (thisAttr == NULL)
+    {
+        return NULL;
+    }
+    PyObject* thisAttrUni = PyUnicode_FromObject(thisAttr);
+    const char* str = PyUnicode_AsUTF8(thisAttrUni);
+    if(str == 0 || strlen(str) < 1)
+    {
+        return NULL;
+    }
+
+    char hex_address[100], *pEnd;
+    const char *_p_ = strstr(str, "_p_vtk");
+    if(_p_ == NULL)
+    {
+        return NULL;
+    }
+
+    const char *class_name = strstr(_p_, "vtk");
+    if(class_name == NULL)
+    {
+        return NULL;
+
+    }
+
+    // Create a generic vtk object pointer and assign the address of the python object to it
+    ::strcpy(hex_address, str+1);
+    hex_address[_p_-str-1] = '\0';
+    long address = strtol(hex_address, &pEnd, 16);
+
+    vtkObjectBase* vtk_object = (vtkObjectBase*)((void*)address);
+    if(vtk_object->IsA(class_name))
+    {
+        vtk_object->Register(NULL);
+        return vtk_object;
+    }
+
+    // Catch all in case something goes wrong
+    return NULL;
 };
 
 vtkSmartPointer<vtkRenderer> GetVtkSmartPointerRenderer(PyObject* pPythonObject)
