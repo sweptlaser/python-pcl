@@ -118,7 +118,7 @@ vtkObjectBase* ExtractVtkWrappedPointer(PyObject* pPythonObject)
     // Create a generic vtk object pointer and assign the address of the python object to it
     ::strcpy(hex_address, str+1);
     hex_address[_p_-str-1] = '\0';
-    long address = strtol(hex_address, &pEnd, 16);
+    uint64_t address = strtoll(hex_address, &pEnd, 16);
 
     vtkObjectBase* vtk_object = (vtkObjectBase*)((void*)address);
     if(vtk_object->IsA(class_name))
