@@ -1762,9 +1762,6 @@ cdef extern from "vtkRendererCollection.h" nogil:
         vtkRendererCollection()
 ###
 
-cdef extern from "vtkXOpenGLRenderWindow.h" nogil:
-    cdef cppclass vtkXOpenGLRenderWindow:
-        vtkXOpenGLRenderWindow()
 
 ctypedef vtkSmartPointer[vtkRenderWindow] vtkSmartPointerRenderWindowPtrT
 ctypedef vtkSmartPointer[vtkRenderer] vtkSmartPointerRendererPtrT
