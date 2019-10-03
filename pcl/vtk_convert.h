@@ -46,33 +46,6 @@ using namespace boost::python;
     return incref(obj.ptr());
 }
 
- static PyObject* convertRenderer(const vtkSmartPointer<vtkRendererCollection> &rVtkSmartPointer)
-{
-    // Make sure something is being pointed to, otherwise return python None type
-    if(rVtkSmartPointer.GetPointer() == NULL)
-    {
-        return incref(Py_None);
-    }
-
-    // Get the address string of the vtk object
-    std::ostringstream oss;
-    oss << (void*) rVtkSmartPointer.GetPointer();
-    std::string address_str = oss.str();
-
-    // Can get vtk object type from address string using vtk tricks
-    object obj;
-    try
-    {
-        obj = import("vtk").attr("vtkObjectBase")(address_str);
-    }
-    catch(...)
-    {
-        return NULL;
-    }
-    // Important to increment object reference
-    return incref(obj.ptr());
-}
-
 // This python to C++ converter uses the fact that VTK Python objects have an
 // attribute called __this__, which is a string containing the memory address
 // of the VTK C++ object and its class name.

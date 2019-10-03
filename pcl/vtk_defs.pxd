@@ -1778,7 +1778,6 @@ ctypedef vtkRenderWindow vtkRenderWindowPtrT
 
 cdef extern from "vtk_convert.h":
     PyObject* convertSmartPointer(const vtkSmartPointerRenderWindowPtrT &smartPointer)
-    PyObject* convertRenderer(const vtkSmartPointerRendererCollectionPtrT &smartPointer)
     void* ExtractVtkWrappedPointer(PyObject* pPythonObject) except +
     vtkSmartPointer[vtkRenderer] GetVtkSmartPointerRenderer(PyObject* pPythonObject) except +
     vtkSmartPointer[vtkRenderWindow] GetVtkSmartPointerRenderWindow(PyObject* pPythonObject) except +
