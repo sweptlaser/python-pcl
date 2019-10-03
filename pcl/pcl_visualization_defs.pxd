@@ -1804,6 +1804,8 @@ cdef extern from "pcl/visualization/pcl_visualizer.h" namespace "pcl::visualizat
         #   * \param[in,out] win a vtkRenderWindow object that the interactor is attached to
         # void setupInteractor (vtkRenderWindowInteractor *iren, vtkRenderWindow *win);
         void setupInteractor (vtk.vtkRenderWindowInteractor* iren, vtk.vtkRenderWindow* win);
+
+        void setupInteractor (vtk.vtkRenderWindowInteractor* iren, vtk.vtkRenderWindow* win, vtk.vtkInteractorStyle* style);
         
         # /** \brief Get a pointer to the current interactor style used. */
         # inline vtkSmartPointer<PCLVisualizerInteractorStyle> getInteractorStyle ()

@@ -1760,6 +1760,11 @@ cdef extern from "vtkRendererCollection.h" nogil:
     # cdef cppclass vtkRenderWindowInteractor(vtkObject):
     cdef cppclass vtkRendererCollection:
         vtkRendererCollection()
+
+cdef extern from "vtkInteractorStyle.h" nogil:
+    cdef cppclass vtkInteractorStyle:
+        vtkInteractorStyle()
+
 ###
 
 
@@ -1777,8 +1782,7 @@ cdef extern from "vtk_convert.h":
     void* ExtractVtkWrappedPointer(PyObject* pPythonObject) except +
     vtkSmartPointer[vtkRenderer] GetVtkSmartPointerRenderer(PyObject* pPythonObject) except +
     vtkSmartPointer[vtkRenderWindow] GetVtkSmartPointerRenderWindow(PyObject* pPythonObject) except +
-    void* GetVtkRenderWindowInteractor(PyObject* pPythonObject) except +
-    void* GetVtkRenderWindow(PyObject* pPythonObject) except +
+
 
 cdef extern from "vtkVersionMacros.h":
     cdef int VTK_MAJOR_VERSION

@@ -148,16 +148,4 @@ vtkSmartPointer<vtkRenderWindow> GetVtkSmartPointerRenderWindow(PyObject* pPytho
     return SmartPointer;
 }
 
-void* GetVtkRenderWindowInteractor(PyObject* pPythonObject)
-{
-    auto vtk_object = ExtractVtkWrappedPointer(pPythonObject);
-    return vtk_object;
-}
-
-void* GetVtkRenderWindow(PyObject* pPythonObject)
-{
-    auto vtk_object = ExtractVtkWrappedPointer(pPythonObject);
-    return vtk_object;
-}
-
 #endif //_VTK_CONVERT_CPP__

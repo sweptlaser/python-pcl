@@ -332,6 +332,21 @@ cdef class PCLVisualizering:
         # self.thisptr().addCone()
         pass
 
+    def setup_interactor(self, object iren, object win, object style = None):
+        cdef PyObject *irenPy = <PyObject *>iren
+        cdef PyObject *winPy = <PyObject *>win
+        cdef void* winPtr = vtk_defs.ExtractVtkWrappedPointer(winPy)
+        cdef void* irenPtr= vtk_defs.ExtractVtkWrappedPointer(irenPy)
+        cdef PyObject *stylePy = <PyObject *>style
+        cdef void* stylePtr
+        if style is not None:
+            stylePtr = vtk_defs.ExtractVtkWrappedPointer(winPy)
+            self.thisptr().setupInteractor(<vtk_defs.vtkRenderWindowInteractor*>irenPtr,
+                                           <vtk_defs.vtkRenderWindow*>winPtr,
+                                           <vtk_defs.vtkInteractorStyle*>stylePtr)
+        else:
+            self.thisptr().setupInteractor(<vtk_defs.vtkRenderWindowInteractor*>irenPtr, <vtk_defs.vtkRenderWindow*>winPtr)
+
     def get_render_window(self):
         cdef vtk_defs.vtkSmartPointer[vtk_defs.vtkRenderWindow] temp = self.thisptr().getRenderWindow()
         converted_PY = vtk_defs.convertSmartPointer(temp)
