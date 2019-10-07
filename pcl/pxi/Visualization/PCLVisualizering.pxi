@@ -31,8 +31,8 @@ cdef class PCLVisualizering:
         self.winptr_shared = self.thisptr().getRenderWindow()
 
     def __cinit_renderer__(self, ren, wind, bytes name, bool create_interactor):
-        self.renptr_shared = vtk_defs.GetVtkSmartPointerRenderer(<PyObject *>ren)
-        self.winptr_shared = vtk_defs.GetVtkSmartPointerRenderWindow(<PyObject *>wind)
+        self.renptr_shared = vtk_defs.GetVtkSmartPointer[vtk_defs.vtkRenderer](<PyObject *>ren)
+        self.winptr_shared = vtk_defs.GetVtkSmartPointer[vtk_defs.vtkRenderWindow](<PyObject *>wind)
         sp_assign(self.thisptr_shared, new pcl_vis.PCLVisualizer(self.renptr_shared, self.winptr_shared, name, create_interactor))
 
     def __cinit__(self, *pargs, **kwargs):

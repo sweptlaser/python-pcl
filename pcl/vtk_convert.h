@@ -104,21 +104,12 @@ vtkObjectBase* ExtractVtkWrappedPointer(PyObject* pPythonObject)
     return NULL;
 };
 
-vtkSmartPointer<vtkRenderer> GetVtkSmartPointerRenderer(PyObject* pPythonObject)
+template<class T>
+vtkSmartPointer<T> GetVtkSmartPointer(PyObject* pPythonObject)
 {
-    auto vtk_object = ExtractVtkWrappedPointer(pPythonObject);
-    auto vtk_renderer = vtkRenderer::SafeDownCast(vtk_object);
-    vtkSmartPointer<vtkRenderer> SmartPointer = vtkSmartPointer<vtkRenderer>::Take(vtk_renderer);
-    return SmartPointer;
-}
-
-vtkSmartPointer<vtkRenderWindow> GetVtkSmartPointerRenderWindow(PyObject* pPythonObject)
-{
-    vtkObjectBase* vtk_object_base = ExtractVtkWrappedPointer(pPythonObject);
-    auto vtk_renderwindow = vtkRenderWindow::SafeDownCast(vtk_object_base);
-    vtkSmartPointer<vtkRenderWindow> SmartPointer = vtkSmartPointer<vtkRenderWindow>::Take(vtk_renderwindow);
-
-    return SmartPointer;
+    auto base_object = ExtractVtkWrappedPointer(pPythonObject);
+    auto real_object = T::SafeDownCast(base_object);
+    return vtkSmartPointer<T>::Take(real_object);
 }
 
 #endif //_VTK_CONVERT_CPP__
