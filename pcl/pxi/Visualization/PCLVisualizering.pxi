@@ -23,16 +23,17 @@ cdef class PCLVisualizering:
     """
     """
     cdef pcl_vis.PCLVisualizerPtr_t thisptr_shared
+    cdef vtk_defs.vtkSmartPointerRendererPtrT renptr_shared
+    cdef vtk_defs.vtkSmartPointerRenderWindowPtrT winptr_shared
 
     def __cinit_simple__(self, bytes name, bool create_interactor):
         sp_assign(self.thisptr_shared, new pcl_vis.PCLVisualizer(name, create_interactor))
+        self.winptr_shared = self.thisptr().getRenderWindow()
 
     def __cinit_renderer__(self, ren, wind, bytes name, bool create_interactor):
-        cdef PyObject *renPy = <PyObject *>ren
-        cdef PyObject *winPy = <PyObject *>wind
-        cdef vtk_defs.vtkSmartPointerRendererPtrT renPtr = vtk_defs.GetVtkSmartPointerRenderer(renPy)
-        cdef vtk_defs.vtkSmartPointerRenderWindowPtrT winPtr= vtk_defs.GetVtkSmartPointerRenderWindow(winPy)
-        sp_assign(self.thisptr_shared, new pcl_vis.PCLVisualizer(renPtr, winPtr, name, create_interactor))
+        self.renptr_shared = vtk_defs.GetVtkSmartPointerRenderer(<PyObject *>ren)
+        self.winptr_shared = vtk_defs.GetVtkSmartPointerRenderWindow(<PyObject *>wind)
+        sp_assign(self.thisptr_shared, new pcl_vis.PCLVisualizer(self.renptr_shared, self.winptr_shared, name, create_interactor))
 
     def __cinit__(self, *pargs, **kwargs):
         name = b'visual'
@@ -336,8 +337,7 @@ cdef class PCLVisualizering:
         self.thisptr().setShowFPS(show_fps)
 
     def get_render_window(self):
-        cdef vtk_defs.vtkSmartPointer[vtk_defs.vtkRenderWindow] temp = self.thisptr().getRenderWindow()
-        converted_PY = vtk_defs.convertSmartPointer(temp)
+        converted_PY = vtk_defs.convertSmartPointer(self.winptr_shared)
         if converted_PY == NULL:
             return None
         return <object>converted_PY
