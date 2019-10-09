@@ -667,6 +667,16 @@ ctypedef shared_ptr[vector[int]] IndicesPtr_t;
 # pcl_base.h
 # template <typename PointT>
 # class PCLBase
+cdef extern from "pcl/pcl_base.h" nogil:
+    cdef cppclass PCLBase_PCLPointCloud2 "pcl::PCLBase<pcl::PCLPointCloud2>":
+        PCLBase_PCLPointCloud2 ()
+
+        void setInputCloud(shared_ptr[PCLPointCloud2] &cloud)
+
+        shared_ptr[PCLPointCloud2] getInputCloud ()
+
+        void setIndices (IndicesPtr_t &indices)
+
 cdef extern from "pcl/pcl_base.h" namespace "pcl" nogil:
     cdef cppclass PCLBase[PointT]:
         PCLBase ()

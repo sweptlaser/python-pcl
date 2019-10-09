@@ -1200,6 +1200,18 @@ cdef extern from "pcl/filters/random_sample.h" namespace "pcl":
 # class StatisticalOutlierRemoval : public FilterIndices<PointT>
 # NG
 # cdef cppclass StatisticalOutlierRemoval[T](FilterIndices[T]):
+cdef extern from "pcl/filters/statistical_outlier_removal.h":
+    cdef cppclass StatisticalOutlierRemoval_PCLPointCloud2 "pcl::StatisticalOutlierRemoval<pcl::PCLPointCloud2>":
+        StatisticalOutlierRemoval_PCLPointCloud2()
+        int getMeanK()
+        void setMeanK (int nr_k)
+        double getStddevMulThresh()
+        void setStddevMulThresh (double std_mul)
+        bool getNegative()
+        void setNegative (bool negative)
+        void setInputCloud (shared_ptr[cpp.PCLPointCloud2])
+        void filter(cpp.PCLPointCloud2 &c)
+
 cdef extern from "pcl/filters/statistical_outlier_removal.h" namespace "pcl":
     cdef cppclass StatisticalOutlierRemoval[T]:
         StatisticalOutlierRemoval()
