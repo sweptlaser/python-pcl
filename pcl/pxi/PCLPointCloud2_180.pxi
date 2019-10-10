@@ -39,6 +39,13 @@ cdef extern from "ProjectInliers.h":
 #                - <Py_ssize_t><void *>&(idx.getptr(p_pointcloud2, 0).x))
 # _pc_tmp_pointcloud2 = None
 
+class PCLPointField:
+    def __init__(self, name, offset, datatype, count):
+        self.name = name
+        self.offset = offset
+        self.datatype = datatype
+        self.count = count
+
 cdef class PCLPointCloud2:
     """Represents a cloud of points in 3-d space.
 
@@ -78,6 +85,19 @@ cdef class PCLPointCloud2:
     property is_dense:
         """ property containing whether the cloud is dense or not """
         def __get__(self): return self.thisptr().is_dense
+    property fields:
+        """ property containing the index of the fields within the point cloud datapoints """
+        def __get__(self):
+            fields = []
+            for f in self.thisptr().fields:
+                fields.append(PCLPointField(f.name, f.offset, f.datatype, f.count))
+            return fields
+    property point_step:
+        """ property containing the step between point cloud datapoints """
+        def __get__(self): return self.thisptr().point_step
+    property data:
+        """ property containing the point cloud data """
+        def __get__(self): return self.thisptr().data
 
     def __repr__(self):
         return "<PCLPointCloud2>"
