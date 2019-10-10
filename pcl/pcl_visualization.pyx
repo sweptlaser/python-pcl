@@ -72,6 +72,7 @@ include "pxi/Visualization/Handler/PointCloudColorHandleringRandom.pxi"
 include "pxi/Visualization/Handler/PointCloudColorHandleringRGBField.pxi"
 include "pxi/Visualization/Handler/PointCloudGeometryHandleringCustom.pxi"
 include "pxi/Visualization/Handler/PointCloudGeometryHandleringSurfaceNormal.pxi"
+include "pxi/Visualization/Handler/PointCloudGeometryHandlering.pxi"
 include "pxi/Visualization/Handler/PointCloudGeometryHandleringXYZ.pxi"
 
 # VTK

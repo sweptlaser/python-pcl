@@ -274,7 +274,7 @@ cdef class PCLVisualizering:
         _ch = pcl_vis._to_PointCloudColorHandler_PCLPointCloud2_Ptr_t(color_handler.thisptr_shared)
         self.thisptr().addPointCloud_PCLPointCloud2(cloud.thisptr_shared, _ch, _origin, _orientation, _id, viewport)
 
-    def AddPointCloud_PCLPointCloud2(self, _pcl.PCLPointCloud2 cloud, pcl_visualization.PointCloudGeometryHandleringXYZ geometry_handler, pcl_visualization.PointCloudColorHandleringTypes color_handler, vector[float] origin, vector[float] orientation, id = b'cloud', int viewport = 0):
+    def AddPointCloud_PCLPointCloud2(self, _pcl.PCLPointCloud2 cloud, pcl_visualization.PointCloudGeometryHandleringTypes geometry_handler, pcl_visualization.PointCloudColorHandleringTypes color_handler, vector[float] origin, vector[float] orientation, id = b'cloud', int viewport = 0):
         cdef cpp.Vector4f _origin = cpp.Vector4f(origin[0], origin[1], origin[2], 0.0)
         cdef cpp.Quaternionf _orientation = cpp.Quaternionf(orientation[0], orientation[1], orientation[2], orientation[3])
         cdef bytes _id

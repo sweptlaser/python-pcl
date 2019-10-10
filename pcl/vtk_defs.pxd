@@ -1765,6 +1765,10 @@ cdef extern from "vtkInteractorStyle.h" nogil:
     cdef cppclass vtkInteractorStyle:
         vtkInteractorStyle()
 
+cdef extern from "vtkPoints.h" nogil:
+    cdef cppclass vtkPoints:
+        vtkPoints()
+
 ###
 
 

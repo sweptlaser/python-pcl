@@ -36,6 +36,14 @@ ctypedef fused PointCloudColorHandleringTypes:
     PointCloudColorHandleringCustom
     PointCloudColorHandleringGenericField
 
+cdef class PointCloudGeometryHandlering:
+    cdef cpp.shared_bare_ptr thisptr_shared     # PointCloudGeometryHandler[PointT]
+    
+    # pcl_visualization_defs
+    cdef inline pcl_vis.PointCloudGeometryHandler[cpp.PointXYZ] *thisptr(self) nogil:
+        # Shortcut to get raw pointer to underlying PointCloudGeometryHandler<PointXYZ>.
+        return <pcl_vis.PointCloudGeometryHandler[cpp.PointXYZ] *> self.thisptr_shared.get()
+
 cdef class PointCloudGeometryHandleringCustom:
     cdef pcl_vis.PointCloudGeometryHandlerCustom_Ptr_t thisptr_shared     # PointCloudGeometryHandlerCustom[PointXYZ]
     
@@ -53,6 +61,10 @@ cdef class PointCloudGeometryHandleringXYZ:
     cdef inline pcl_vis.PointCloudGeometryHandlerXYZ[cpp.PointXYZ] *thisptr(self) nogil:
         # Shortcut to get raw pointer to underlying PointCloudGeometryHandlerXYZ<PointXYZ>.
         return <pcl_vis.PointCloudGeometryHandlerXYZ[cpp.PointXYZ] *> self.thisptr_shared.get()
+
+ctypedef fused PointCloudGeometryHandleringTypes:
+    PointCloudGeometryHandlering
+    PointCloudGeometryHandleringXYZ
 
 cdef class vtkSmartPointerRenderWindow:
     # cdef vtk_defs.vtkRenderWindow_Ptr_t thisptr_shared     # vtkRenderWindow
