@@ -274,6 +274,22 @@ cdef class PCLVisualizering:
         _ch = pcl_vis._to_PointCloudColorHandler_PCLPointCloud2_Ptr_t(color_handler.thisptr_shared)
         self.thisptr().addPointCloud_PCLPointCloud2(cloud.thisptr_shared, _ch, _origin, _orientation, _id, viewport)
 
+    def AddPointCloud_PCLPointCloud2(self, _pcl.PCLPointCloud2 cloud, pcl_visualization.PointCloudGeometryHandleringXYZ geometry_handler, pcl_visualization.PointCloudColorHandleringTypes color_handler, vector[float] origin, vector[float] orientation, id = b'cloud', int viewport = 0):
+        cdef cpp.Vector4f _origin = cpp.Vector4f(origin[0], origin[1], origin[2], 0.0)
+        cdef cpp.Quaternionf _orientation = cpp.Quaternionf(orientation[0], orientation[1], orientation[2], orientation[3])
+        cdef bytes _id
+        if isinstance(id, unicode):
+            _id = id.encode("ascii")
+        elif isinstance(id, bytes):
+            _id = id
+        else:
+            raise TypeError("id should be a string, got %r" % id)
+        cdef pcl_vis.PointCloudGeometryHandler_PCLPointCloud2_Ptr_t _gh
+        _gh = pcl_vis._to_PointCloudGeometryHandler_PCLPointCloud2_Ptr_t(geometry_handler.thisptr_shared)
+        cdef pcl_vis.PointCloudColorHandler_PCLPointCloud2_Ptr_t _ch
+        _ch = pcl_vis._to_PointCloudColorHandler_PCLPointCloud2_Ptr_t(color_handler.thisptr_shared)
+        self.thisptr().addPointCloud_PCLPointCloud2(cloud.thisptr_shared, _gh, _ch, _origin, _orientation, _id, viewport)
+
     def SetPointCloudRenderingProperties(self, int propType, int propValue, propName = b'cloud'):
         self.thisptr().setPointCloudRenderingProperties (propType, propValue, <string> propName, 0)
 

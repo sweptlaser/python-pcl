@@ -9,15 +9,16 @@ from boost_shared_ptr cimport sp_assign
 cdef class PointCloudGeometryHandleringXYZ:
     """
     """
-    cdef pcl_vis.PointCloudGeometryHandlerXYZ_t *me
+    def __cinit__(self, pc):
+        if isinstance(pc, _pcl.PCLPointCloud2):
+            self.__assign_PCLPointCloud2__(pc)
+        else:
+            raise TypeError("currently only support PCLPointCloud2 point clouds")
     
-    def __cinit__(self):
-        print('__cinit__')
-        pass
+    def __assign_PCLPointCloud2__(self, _pcl.PCLPointCloud2 pc):
+        sp_assign(self.thisptr_shared, <int*> new pcl_vis.PointCloudGeometryHandlerXYZ_PCLPointCloud2(pc.thisptr_shared))
     
     def __dealloc__(self):
-        print('__dealloc__')
-        # del self.me
         pass
 
 

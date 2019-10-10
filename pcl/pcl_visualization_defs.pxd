@@ -74,6 +74,12 @@ cdef extern from "pcl/visualization/point_cloud_handlers.h" namespace "pcl::visu
 # point_cloud_handlers.h -> point_cloud_geometry_handlers.h(1.7.2)
 # template <typename PointT>
 # class PointCloudGeometryHandler
+
+cdef extern from "pcl/visualization/point_cloud_geometry_handlers.h" namespace "pcl::visualization" nogil:
+    cdef cppclass PointCloudGeometryHandler_PCLPointCloud2 "PointCloudGeometryHandler<pcl::PCLPointCloud2>":
+        PointCloudGeometryHandler_PCLPointCloud2(shared_ptr[const cpp.PCLPointCloud2] &cloud)
+ctypedef shared_ptr[PointCloudGeometryHandler_PCLPointCloud2] PointCloudGeometryHandler_PCLPointCloud2_Ptr_t
+
 cdef extern from "pcl/visualization/point_cloud_handlers.h" namespace "pcl::visualization" nogil:
     cdef cppclass PointCloudGeometryHandler[T]:
         # brief Constructor.
@@ -154,6 +160,9 @@ ctypedef shared_ptr[PointCloudColorHandlerCustom[cpp.PointWithRange]] PointCloud
 # template <typename PointT>
 # class PointCloudGeometryHandlerXYZ : public PointCloudGeometryHandler<PointT>
 cdef extern from "pcl/visualization/point_cloud_handlers.h" namespace "pcl::visualization" nogil:
+    cdef cppclass PointCloudGeometryHandlerXYZ_PCLPointCloud2 "PointCloudGeometryHandlerXYZ<pcl::PCLPointCloud2>" (PointCloudColorHandler[cpp.PCLPointCloud2]):
+        PointCloudGeometryHandlerXYZ_PCLPointCloud2 (const shared_ptr[cpp.PCLPointCloud2] &cloud)
+    
     cdef cppclass PointCloudGeometryHandlerXYZ[PointT](PointCloudGeometryHandler[PointT]):
         PointCloudGeometryHandlerXYZ()
         # public:
@@ -1181,6 +1190,7 @@ cdef extern from "pcl/visualization/pcl_visualizer.h" namespace "pcl::visualizat
         #                const Eigen::Vector4f& sensor_origin,
         #                const Eigen::Quaternion<float>& sensor_orientation,
         #                const std::string &id = "cloud", int viewport = 0);
+        bool addPointCloud_PCLPointCloud2 "addPointCloud" (const shared_ptr[cpp.PCLPointCloud2] &cloud, const PointCloudGeometryHandler_PCLPointCloud2_Ptr_t &geometry_handler, const PointCloudColorHandler_PCLPointCloud2_Ptr_t &color_handler, const cpp.Vector4f& sensor_origin, const cpp.Quaternionf& sensor_orientation, const string &id, int viewport)
         
         # brief Add a binary blob Point Cloud to screen.
         # Because the geometry/color handler is given as a pointer, it will be pushed back to the list of
@@ -3159,6 +3169,7 @@ cdef extern from "typedeferral.h":
     bool pcl_visualization_PCLVisualizer_addPointCloud [PointCloudPtrT] (PCLVisualizer &visual, const PointCloudPtrT &cloud, const PointCloudColorHandlerGenericField[cpp.PointXYZ] &color_handler, string id, int viewport)
     void* pcl_visualization_newPointCloudColorHandlerGenericField [PointCloudPtrT] (PointCloudPtrT &cloud, const string &field)
     PointCloudColorHandler_PCLPointCloud2_Ptr_t& _to_PointCloudColorHandler_PCLPointCloud2_Ptr_t(cpp.shared_bare_ptr& color_handler)
+    PointCloudGeometryHandler_PCLPointCloud2_Ptr_t& _to_PointCloudGeometryHandler_PCLPointCloud2_Ptr_t(cpp.shared_bare_ptr& geometry_handler)
 
 ###
 

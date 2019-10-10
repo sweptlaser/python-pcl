@@ -45,4 +45,10 @@ _to_PointCloudColorHandler_PCLPointCloud2_Ptr_t(boost::shared_ptr<int>& color_ha
   return reinterpret_cast<boost::shared_ptr<PointCloudColorHandler<PCLPointCloud2>>&>(color_handler);
 }
 
+inline boost::shared_ptr<PointCloudGeometryHandler<PCLPointCloud2>>&
+_to_PointCloudGeometryHandler_PCLPointCloud2_Ptr_t(boost::shared_ptr<int>& geometry_handler)
+{
+  return reinterpret_cast<boost::shared_ptr<PointCloudGeometryHandler<PCLPointCloud2>>&>(geometry_handler);
+}
+
 #endif

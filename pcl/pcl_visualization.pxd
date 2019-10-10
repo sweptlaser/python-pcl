@@ -45,6 +45,14 @@ cdef class PointCloudGeometryHandleringCustom:
         # Shortcut to get raw pointer to underlying PointCloudGeometryHandlerCustom<PointXYZ>.
         return self.thisptr_shared.get()
 
+# class override(PointCloud)
+cdef class PointCloudGeometryHandleringXYZ:
+    cdef cpp.shared_bare_ptr thisptr_shared     # PointCloudGeometryHandlerXYZ[PointT]
+    
+    # pcl_visualization_defs
+    cdef inline pcl_vis.PointCloudGeometryHandlerXYZ[cpp.PointXYZ] *thisptr(self) nogil:
+        # Shortcut to get raw pointer to underlying PointCloudGeometryHandlerXYZ<PointXYZ>.
+        return <pcl_vis.PointCloudGeometryHandlerXYZ[cpp.PointXYZ] *> self.thisptr_shared.get()
 
 cdef class vtkSmartPointerRenderWindow:
     # cdef vtk_defs.vtkRenderWindow_Ptr_t thisptr_shared     # vtkRenderWindow
