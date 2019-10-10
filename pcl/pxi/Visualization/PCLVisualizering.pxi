@@ -353,7 +353,7 @@ cdef class PCLVisualizering:
         self.thisptr().setShowFPS(show_fps)
 
     def get_render_window(self):
-        converted_PY = vtk_defs.convertSmartPointer(self.winptr_shared)
+        cdef PyObject* converted_PY = vtk_defs.convertSmartPointer[vtk_defs.vtkRenderWindow](self.winptr_shared)
         if converted_PY == NULL:
             return None
         return <object>converted_PY

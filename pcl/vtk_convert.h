@@ -18,7 +18,8 @@ using namespace boost::python;
  *  @return A pointer to the Python object. Can be a None object if the smart pointer is empty.
  *  Example from   https://vtk.org/Wiki/Example_from_and_to_python_converters
  */
- static PyObject* convertSmartPointer(const vtkSmartPointer<vtkRenderWindow> &rVtkSmartPointer)
+template<class T>
+static PyObject* convertSmartPointer(const vtkSmartPointer<T> &rVtkSmartPointer)
 {
     // Make sure something is being pointed to, otherwise return python None type
     if(rVtkSmartPointer.GetPointer() == NULL)
