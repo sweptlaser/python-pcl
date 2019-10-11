@@ -66,6 +66,14 @@ ctypedef fused PointCloudGeometryHandleringTypes:
     PointCloudGeometryHandlering
     PointCloudGeometryHandleringXYZ
 
+cdef inline bool isPointCloudGeometryHandlering(object GeometryHandlering):
+        # Is it possible to get this check to compare against the fused type, instead of checking each individual one.
+        # if isinstance(GeometryHandlering, PointCloudGeometryHandleringTypes): return True
+        if isinstance(GeometryHandlering, PointCloudGeometryHandlering): return True
+        if isinstance(GeometryHandlering, PointCloudGeometryHandleringXYZ): return True
+        else: return False
+
+
 cdef class vtkSmartPointerRenderWindow:
     # cdef vtk_defs.vtkRenderWindow_Ptr_t thisptr_shared     # vtkRenderWindow
     cdef vtk_defs.vtkSmartPointer[vtk_defs.vtkRenderWindow] thisptr_shared

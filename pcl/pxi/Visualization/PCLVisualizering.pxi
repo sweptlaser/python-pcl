@@ -260,7 +260,14 @@ cdef class PCLVisualizering:
     def AddPointCloudNormals(self, _pcl.PointCloud cloud, _pcl.PointCloud_Normal normal, int level = 100, double scale = 0.02, id = b'normals', int viewport = 0):
         self.thisptr().addPointCloudNormals[cpp.PointXYZ, cpp.Normal](<cpp.PointCloudPtr_t> cloud.thisptr_shared, <cpp.PointCloud_Normal_Ptr_t> normal.thisptr_shared, level, scale, <string> id, viewport)
 
-    def AddPointCloud_PCLPointCloud2(self, _pcl.PCLPointCloud2 cloud, pcl_visualization.PointCloudColorHandleringTypes color_handler, vector[float] origin, vector[float] orientation, id = b'cloud', int viewport = 0):
+
+    def AddPointCloud_PCLPointCloud2(self, *pargs, **kwargs):
+        if ('geometry_handler' in kwargs) or (len(pargs) > 1 and pcl_visualization.isPointCloudGeometryHandlering(pargs[1])):
+            self.AddPointCloud_PCLPointCloud2_GeometryHandler(*pargs, **kwargs)
+        else:
+            self.AddPointCloud_PCLPointCloud2_ColorHandler(*pargs, **kwargs)
+
+    def AddPointCloud_PCLPointCloud2_ColorHandler(self, _pcl.PCLPointCloud2 cloud, pcl_visualization.PointCloudColorHandleringTypes color_handler, vector[float] origin, vector[float] orientation, id = b'cloud', int viewport = 0):
         cdef cpp.Vector4f _origin = cpp.Vector4f(origin[0], origin[1], origin[2], 0.0)
         cdef cpp.Quaternionf _orientation = cpp.Quaternionf(orientation[0], orientation[1], orientation[2], orientation[3])
         cdef bytes _id
@@ -274,7 +281,7 @@ cdef class PCLVisualizering:
         _ch = pcl_vis._to_PointCloudColorHandler_PCLPointCloud2_Ptr_t(color_handler.thisptr_shared)
         self.thisptr().addPointCloud_PCLPointCloud2(cloud.thisptr_shared, _ch, _origin, _orientation, _id, viewport)
 
-    def AddPointCloud_PCLPointCloud2(self, _pcl.PCLPointCloud2 cloud, pcl_visualization.PointCloudGeometryHandleringTypes geometry_handler, pcl_visualization.PointCloudColorHandleringTypes color_handler, vector[float] origin, vector[float] orientation, id = b'cloud', int viewport = 0):
+    def AddPointCloud_PCLPointCloud2_GeometryHandler(self, _pcl.PCLPointCloud2 cloud, pcl_visualization.PointCloudGeometryHandleringTypes geometry_handler, pcl_visualization.PointCloudColorHandleringTypes color_handler, vector[float] origin, vector[float] orientation, id = b'cloud', int viewport = 0):
         cdef cpp.Vector4f _origin = cpp.Vector4f(origin[0], origin[1], origin[2], 0.0)
         cdef cpp.Quaternionf _orientation = cpp.Quaternionf(orientation[0], orientation[1], orientation[2], orientation[3])
         cdef bytes _id
