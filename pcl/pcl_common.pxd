@@ -3017,6 +3017,8 @@ cdef extern from "pcl/common/angles.h" namespace "pcl":
 #   * \ingroup common
 #   */
 # inline int getFieldIndex (const pcl::PCLPointCloud2 &cloud, const std::string &field_name)
+cdef extern from "pcl/common/io.h" namespace "pcl":
+    inline int getFieldIndex (const cpp.PCLPointCloud2 &cloud, const string &field_name)
 # 
 # /** \brief Get the index of a specified field (i.e., dimension/channel)
 #   * \param[in] cloud the the point cloud message

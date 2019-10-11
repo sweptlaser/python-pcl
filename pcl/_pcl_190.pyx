@@ -148,6 +148,9 @@ def deg2rad(float alpha):
 def rad2deg(float alpha):
     return pcl_cmn.rad2deg(alpha)
 
+def getFieldIndex(_pcl.PCLPointCloud2 cloud, str field):
+    return pcl_cmn.getFieldIndex(deref(cloud.thisptr_shared.get()), <string>field.encode("UTF-8"))
+
 # cdef double deg2rad(double alpha):
 #     return pcl_cmn.rad2deg(alpha)
 # 
