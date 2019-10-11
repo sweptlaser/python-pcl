@@ -151,6 +151,11 @@ def rad2deg(float alpha):
 def getFieldIndex(_pcl.PCLPointCloud2 cloud, str field):
     return pcl_cmn.getFieldIndex(deref(cloud.thisptr_shared.get()), <string>field.encode("UTF-8"))
 
+def concatenatePointCloud(_pcl.PCLPointCloud2 cloud1, _pcl.PCLPointCloud2 cloud2, _pcl.PCLPointCloud2 cloudout):
+    #ret = self.thisptr().concatenate(cloud1.thisptr_shared, cloud2.thisptr_shared, cloudout.thisptr_shared)
+    #pcl_cmn.concatenate(cloud1.thisptr_shared, cloud2.thisptr_shared, cloudout.thisptr_shared)
+    return pcl_cmn.concatenatePointCloud(deref(cloud1.thisptr_shared.get()), deref(cloud2.thisptr_shared.get()), deref(cloudout.thisptr_shared.get()))
+
 # cdef double deg2rad(double alpha):
 #     return pcl_cmn.rad2deg(alpha)
 # 

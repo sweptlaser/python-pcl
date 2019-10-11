@@ -8,6 +8,8 @@ cimport cython
 
 from libcpp.string cimport string
 from libcpp.vector cimport vector
+from libcpp cimport bool
+
 
 cimport eigen as eigen3
 
@@ -3133,6 +3135,11 @@ cdef extern from "pcl/common/io.h" namespace "pcl":
 #   */
 # PCL_EXPORTS bool concatenatePointCloud (const pcl::PCLPointCloud2 &cloud1, const pcl::PCLPointCloud2 &cloud2, pcl::PCLPointCloud2 &cloud_out);
 ###
+
+cdef extern from "pcl/common/io.h" namespace "pcl":
+    #cdef bool concatenate(shared_ptr[cpp.PCLPointCloud2] &cloud1, shared_ptr[cpp.PCLPointCloud2] &cloud2, shared_ptr[cpp.PCLPointCloud2] &cloud_out)
+    #cdef bool concatenate(shared_ptr[cpp.PCLPointCloud2] &cloud1, shared_ptr[cpp.PCLPointCloud2] &cloud2, shared_ptr[cpp.PCLPointCloud2] &cloud_out)
+    bool concatenatePointCloud(const cpp.PCLPointCloud2 &cloud1, const cpp.PCLPointCloud2 &cloud2, const cpp.PCLPointCloud2 &cloudout)
 
 # pcl1.6.0 NG
 # pcl1.7.2
