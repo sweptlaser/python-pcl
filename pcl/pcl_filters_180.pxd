@@ -899,6 +899,23 @@ cdef extern from "pcl/filters/normal_space.h" namespace "pcl":
         # NormalsPtr getNormals () const
 ###
 
+
+cdef extern from "pcl/filters/passthrough.h":
+    cdef cppclass PassThrough_PCLPointCloud2 "pcl::PassThrough<pcl::PCLPointCloud2>":
+        PassThrough()
+        void setFilterFieldName (string field_name)
+        string getFilterFieldName ()
+        void setFilterLimits (float min, float max)
+        void getFilterLimits (float &min, float &max)
+        void setFilterLimitsNegative (const bool limit_negative)
+        void getFilterLimitsNegative (bool &limit_negative)
+        bool getFilterLimitsNegative ()
+        void filter(cpp.PCLPointCloud2 &c)
+        # call base Class(PCLBase)
+        # void setInputCloud (shared_ptr[cpp.PointCloud[T]])
+        # void filter(cpp.PointCloud[T] c)
+
+
 # passthrough.h
 # template <typename PointT>
 # class PassThrough : public FilterIndices<PointT>

@@ -44,6 +44,51 @@ cdef class PassThroughFilter:
         self.me.c_filter(pc.thisptr()[0])
         return pc
 
+cdef class PassThroughFilter_PointCloud2:
+    """
+    Passes points in a cloud based on constraints for one particular field of the point type.
+    """
+    cdef pcl_fil.PassThrough_PCLPointCloud2 *me
+    def __cinit__(self, PCLPointCloud2 pc not None):
+        self.me = new pcl_fil.PassThrough_PCLPointCloud2()
+        (<cpp.PCLBase_PCLPointCloud2*>self.me).setInputCloud (pc.thisptr_shared)
+    # def __cinit__(self):
+    #     self.me = new pcl_fil.PassThrough_PCLPointCloud2()
+    def __dealloc__(self):
+        del self.me
+
+    def set_filter_field_name(self, field_name):
+        """
+        Provide the name of the field to be used for filtering data.
+        """
+        cdef bytes fname_ascii
+        if isinstance(field_name, unicode):
+            fname_ascii = field_name.encode("ascii")
+        elif not isinstance(field_name, bytes):
+            raise TypeError("field_name should be a string, got %r"
+                            % field_name)
+        else:
+            fname_ascii = field_name
+        self.me.setFilterFieldName(string(fname_ascii))
+
+    def set_filter_limits(self, float filter_min, float filter_max):
+        """
+        Set the numerical limits for the field for filtering data.
+        """
+        self.me.setFilterLimits (filter_min, filter_max)
+
+    def filter(self):
+        """
+        Apply the filter according to the previously set parameters and return
+        a new pointcloud
+        """
+        cdef PCLPointCloud2 pc = PCLPointCloud2()
+        # cdef cpp.PointCloud_t *cCondAnd = <cpp.PointCloud_t *>pc.thisptr()[0]
+        # self.me.filter(<cpp.PointCloud_t*> pc.thisptr()[0])
+        # self.me.filter (<cpp.PointCloud_t*> pc.thisptr())
+        self.me.filter(pc.thisptr()[0])
+        return pc
+
 
 cdef class PassThroughFilter_PointXYZI:
     """
