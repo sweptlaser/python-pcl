@@ -77,6 +77,9 @@ cdef class PassThroughFilter_PointCloud2:
         """
         self.me.setFilterLimits (filter_min, filter_max)
 
+    def set_filter_limits_negative(self, bool limit_negative):
+        self.me.setFilterLimitsNegative(limit_negative)
+
     def filter(self):
         """
         Apply the filter according to the previously set parameters and return
