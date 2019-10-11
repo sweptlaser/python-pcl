@@ -20,14 +20,16 @@ cdef void getGeometry_callback(PyObject* gh, vtk_defs.vtkSmartPointer[vtk_defs.v
 cdef class PointCloudGeometryHandlering:
     """
     """
-    def __cinit__(self, pc):
+    def __cinit__(self, pc, *pargs, **kwargs):
         if isinstance(pc, _pcl.PCLPointCloud2):
             self.__assign_PCLPointCloud2__(pc)
         else:
             raise TypeError("currently only support PCLPointCloud2 point clouds")
     
-    def __assign_PCLPointCloud2__(self, _pcl.PCLPointCloud2 pc):
+    def __init__(self, pc):
         self.cloud = pc
+    
+    def __assign_PCLPointCloud2__(self, _pcl.PCLPointCloud2 pc):
         sp_assign(self.thisptr_shared, <int*> new wrapper.PointCloudGeometryHandler_PCLPointCloud2(pc.thisptr_shared, <PyObject*>self, getGeometry_callback))
     
     def __dealloc__(self):
