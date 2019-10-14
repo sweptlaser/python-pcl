@@ -490,6 +490,8 @@ ctypedef shared_ptr[PointCloudColorHandlerHSVField[cpp.PointXYZRGBA]] PointCloud
 cdef extern from "pcl/visualization/point_cloud_handlers.h" namespace "pcl::visualization" nogil:
     cdef cppclass PointCloudColorHandlerGenericField_PCLPointCloud2 "PointCloudColorHandlerGenericField<pcl::PCLPointCloud2>" (PointCloudColorHandler[cpp.PCLPointCloud2]):
         PointCloudColorHandlerGenericField_PCLPointCloud2 (const shared_ptr[cpp.PCLPointCloud2] &cloud, const string &field_name)
+    cdef cppclass PointCloudColorHandlerCustom_PCLPointCloud2 "PointCloudColorHandlerCustom<pcl::PCLPointCloud2>" (PointCloudColorHandler[cpp.PCLPointCloud2]):
+        PointCloudColorHandlerCustom_PCLPointCloud2 (const shared_ptr[cpp.PCLPointCloud2] &cloud, double r, double g, double b)
     
     cdef cppclass PointCloudColorHandlerGenericField[PointT](PointCloudColorHandler[PointT]):
         PointCloudColorHandlerGenericField ()
@@ -1123,6 +1125,7 @@ cdef extern from "pcl/visualization/pcl_visualizer.h" namespace "pcl::visualizat
         # bool addPointCloud [PointT](const shared_ptr[cpp.PointCloud[PointT]] &cloud, const PointCloudColorHandlerRandom[PointT] color_handler, const string &id, int viewport)
         # bool addPointCloud [PointT](const shared_ptr[cpp.PointCloud[PointT]] &cloud, const PointCloudColorHandlerRGBField[PointT] color_handler, const string &id, int viewport)
         bool addPointCloud_ColorHandler "addPointCloud" [PointT](const shared_ptr[cpp.PointCloud[PointT]] &cloud, const PointCloudColorHandlerGenericField[PointT] &color_handler, const string &id, int viewport)
+
         bool addPointCloud_ColorHandler "addPointCloud" [PointT](const shared_ptr[cpp.PointCloud[PointT]] &cloud, const PointCloudColorHandlerCustom[PointT] &color_handler, const string &id, int viewport)
         
         # brief Add a Point Cloud (templated) to screen.
@@ -3168,6 +3171,7 @@ cdef extern from "typedeferral.h":
     bool pcl_visualization_PCLVisualizer_addPointCloud [PointCloudPtrT] (PCLVisualizer &visual, const PointCloudPtrT &cloud, const PointCloudColorHandlerCustom[cpp.PointXYZ] &color_handler, string id, int viewport)
     bool pcl_visualization_PCLVisualizer_addPointCloud [PointCloudPtrT] (PCLVisualizer &visual, const PointCloudPtrT &cloud, const PointCloudColorHandlerGenericField[cpp.PointXYZ] &color_handler, string id, int viewport)
     void* pcl_visualization_newPointCloudColorHandlerGenericField [PointCloudPtrT] (PointCloudPtrT &cloud, const string &field)
+    void* pcl_visualization_newPointCloudColorHandlerCustom [PointCloudPtrT] (PointCloudPtrT &cloud, double &r, double &g, double &b)
     PointCloudColorHandler_PCLPointCloud2_Ptr_t& _to_PointCloudColorHandler_PCLPointCloud2_Ptr_t(cpp.shared_bare_ptr& color_handler)
     PointCloudGeometryHandler_PCLPointCloud2_Ptr_t& _to_PointCloudGeometryHandler_PCLPointCloud2_Ptr_t(cpp.shared_bare_ptr& geometry_handler)
 
