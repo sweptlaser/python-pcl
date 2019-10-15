@@ -30,7 +30,7 @@ pcl_visualization_newPointCloudColorHandlerGenericField (const PointCloudPtrT &c
 
 template <typename PointCloudPtrT>
 inline PointCloudColorHandlerCustom<typename PointCloudPtrT::element_type::value_type>*
-pcl_visualization_newPointCloudColorHandlerCustom (const PointCloudPtrT &cloud, double &r, double &g, double &b)
+pcl_visualization_newPointCloudColorHandlerCustom (const PointCloudPtrT &cloud, int &r, int &g, int &b)
 {
   return new PointCloudColorHandlerCustom<typename PointCloudPtrT::element_type::value_type>(cloud, r, g, b);
 }
