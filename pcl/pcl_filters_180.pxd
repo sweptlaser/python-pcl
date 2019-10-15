@@ -1401,7 +1401,38 @@ cdef extern from "pcl/filters/voxel_grid.h" namespace "pcl":
         # bool getFilterLimitsNegative ()
         bool getFilterLimitsNegative ()
 
+cdef extern from "pcl/filters/voxel_grid.h":
+    cdef cppclass VoxelGrid_PCLPointCloud2 "pcl::VoxelGrid<pcl::PCLPointCloud2>":
+        VoxelGrid()
+        void setLeafSize (float, float, float)
 
+        void setDownsampleAllData (bool downsample)
+
+        bool getDownsampleAllData ()
+
+        void setSaveLeafLayout (bool save_leaf_layout)
+
+        bool getSaveLeafLayout ()
+
+        int getCentroidIndex (float, float, float)
+
+        vector[int] getLeafLayout ()
+
+        void setFilterFieldName (const string &field_name)
+
+        const string getFilterFieldName ()
+
+        void setFilterLimits (const double &limit_min, const double &limit_max)
+
+        void getFilterLimits (double &limit_min, double &limit_max)
+
+        void setFilterLimitsNegative (const bool limit_negative)
+
+        void getFilterLimitsNegative (bool &limit_negative)
+
+        bool getFilterLimitsNegative ()
+
+        void filter(cpp.PCLPointCloud2 &c)
 ###
 
 # template <>

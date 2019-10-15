@@ -27,6 +27,32 @@ cdef class VoxelGridFilter:
         self.me.filter(pc.thisptr()[0])
         return pc
 
+cdef class VoxelGridFilter_PointCloud2:
+    """
+    Assembles a local 3D grid over a given PointCloud, and downsamples + filters the data.
+    """
+    cdef pcl_fil.VoxelGrid_PCLPointCloud2 *me
+    def __cinit__(self, PCLPointCloud2 pc not None):
+        self.me = new pcl_fil.VoxelGrid_PCLPointCloud2()
+        (<cpp.PCLBase_PCLPointCloud2*>self.me).setInputCloud (pc.thisptr_shared)
+    def __dealloc__(self):
+        del self.me
+
+    def set_leaf_size (self, float x, float y, float z):
+        """
+        Set the voxel grid leaf size.
+        """
+        self.me.setLeafSize(x,y,z)
+
+    def filter(self):
+        """
+        Apply the filter according to the previously set parameters and return
+        a new pointcloud
+        """
+        cdef PCLPointCloud2 pc = PCLPointCloud2()
+        self.me.filter(pc.thisptr()[0])
+        return pc
+
 cdef class VoxelGridFilter_PointXYZI:
     """
     Assembles a local 3D grid over a given PointCloud, and downsamples + filters the data.
