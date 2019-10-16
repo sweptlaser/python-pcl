@@ -1020,6 +1020,17 @@ cdef extern from "pcl/filters/plane_clipper3D.h" namespace "pcl":
 ###
 
 # project_inliers.h
+cdef extern from "pcl/filters/project_inliers.h":
+    cdef cppclass ProjectInliers_PCLPointCloud2 "pcl::ProjectInliers<pcl::PCLPointCloud2>":
+        ProjectInliers ()
+        void setModelType (int model)
+        int getModelType ()
+        void setModelCoefficients (cpp.ModelCoefficients * model)
+        cpp.ModelCoefficients * getModelCoefficients ()
+        void setCopyAllData (bool val)
+        bool getCopyAllData ()
+        void filter(cpp.PCLPointCloud2 &c)
+
 # template<typename PointT>
 # class ProjectInliers : public Filter<PointT>
 cdef extern from "pcl/filters/project_inliers.h" namespace "pcl":
