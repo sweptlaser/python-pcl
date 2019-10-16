@@ -40,3 +40,31 @@ cdef class RadiusOutlierRemoval:
     def get_MinNeighborsInRadius(self):
         return self.me.getMinNeighborsInRadius ()
 
+cdef class RadiusOutlierRemoval_PCLPointCloud2:
+    """
+    RadiusOutlierRemoval class for ...
+    """
+    cdef pcl_fil.RadiusOutlierRemoval_PCLPointCloud2 *me
+    def __cinit__(self, PCLPointCloud2 pc not None):
+        self.me = new pcl_fil.RadiusOutlierRemoval_PCLPointCloud2()
+        (<cpp.PCLBase_PCLPointCloud2*>self.me).setInputCloud (pc.thisptr_shared)
+    def __dealloc__(self):
+        del self.me
+
+    def filter(self):
+        """
+        Apply the filter according to the previously set parameters and return
+        a new pointcloud
+        """
+        cdef PCLPointCloud2 pc = PCLPointCloud2()
+        self.me.filter(pc.thisptr()[0])
+        return pc
+
+    def set_radius_search(self, double radius):
+        self.me.setRadiusSearch(radius)
+    def get_radius_search(self):
+        return self.me.getRadiusSearch()
+    def set_MinNeighborsInRadius(self, int min_pts):
+        self.me.setMinNeighborsInRadius (min_pts)
+    def get_MinNeighborsInRadius(self):
+        return self.me.getMinNeighborsInRadius ()

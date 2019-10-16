@@ -1095,6 +1095,15 @@ ctypedef ProjectInliers[cpp.PointXYZRGBA] ProjectInliers_PointXYZRGBA_t
 ###
 
 # radius_outlier_removal.h
+cdef extern from "pcl/filters/radius_outlier_removal.h":
+    cdef cppclass RadiusOutlierRemoval_PCLPointCloud2 "pcl::RadiusOutlierRemoval<pcl::PCLPointCloud2>":
+        RadiusOutlierRemoval ()
+        void setRadiusSearch (double radius)
+        double getRadiusSearch ()
+        void setMinNeighborsInRadius (int min_pts)
+        int getMinNeighborsInRadius ()
+        void filter(cpp.PCLPointCloud2 &c)
+
 # template<typename PointT>
 # class RadiusOutlierRemoval : public FilterIndices<PointT>
 cdef extern from "pcl/filters/radius_outlier_removal.h" namespace "pcl":
