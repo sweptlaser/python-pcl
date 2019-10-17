@@ -205,7 +205,7 @@ cdef extern from "pcl/pcl_config.h":
     # cdef int PCL_REVISION_VERSION
     # cdef int PCL_DEV_VERSION
     # PCL_VERSION
-    # VTK_RENDERING_BACKEND_OPENGL_VERSION
+    cdef int VTK_RENDERING_BACKEND_OPENGL_VERSION
 
 ###
 

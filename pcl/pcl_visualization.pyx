@@ -5,7 +5,8 @@ from libcpp cimport bool
 from collections import Sequence
 import numbers
 import numpy as np
-#cimport vtk_defs
+cimport vtk_defs
+cimport pcl_defs as cpp
 
 import vtk
 if not (vtk.VTK_MAJOR_VERSION == vtk_defs.VTK_MAJOR_VERSION and vtk.VTK_MINOR_VERSION == vtk_defs.VTK_MINOR_VERSION):
@@ -14,6 +15,20 @@ if not (vtk.VTK_MAJOR_VERSION == vtk_defs.VTK_MAJOR_VERSION and vtk.VTK_MINOR_VE
                                                                                                 vtk_defs.VTK_MAJOR_VERSION,
                                                                                                 vtk_defs.VTK_MINOR_VERSION))
 
+import platform
+if cpp.VTK_RENDERING_BACKEND_OPENGL_VERSION == 1:
+    VTK_RENDERING_BACKEND="OpenGL"
+elif cpp.VTK_RENDERING_BACKEND_OPENGL_VERSION == 2:
+    VTK_RENDERING_BACKEND="OpenGL2"
+else:
+    raise Exception("could not detect VTK build backend")
+if platform.system() == "Windows":
+    base_compare='vtkIOExport'
+else:
+    base_compare='vtkRendering'
+if not '{}{}'.format(base_compare, VTK_RENDERING_BACKEND) in dir(vtk):
+    raise Exception("VTK runtime backend does not match VTK build backend ({})".format(VTK_RENDERING_BACKEND))
+del base_compare
 
 cimport numpy as cnp
 
