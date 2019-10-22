@@ -95,6 +95,12 @@ cdef class PCLPointCloud2:
     property point_step:
         """ property containing the step between point cloud datapoints """
         def __get__(self): return self.thisptr().point_step
+    property row_step:
+        """ property containing the step between point cloud rows """
+        def __get__(self): return self.thisptr().row_step
+    property is_bigendian:
+        """ property containing whether the cloud is bigendian or not"""
+        def __get__(self): return self.thisptr().is_bigendian
     property data:
         """ property containing the point cloud data """
         def __get__(self): return self.thisptr().data
