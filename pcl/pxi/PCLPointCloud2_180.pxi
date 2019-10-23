@@ -103,7 +103,11 @@ cdef class PCLPointCloud2:
         def __get__(self): return self.thisptr().is_bigendian
     property data:
         """ property containing the point cloud data """
-        def __get__(self): return self.thisptr().data
+        def __get__(self):
+            cdef int size = self.thisptr().data.size()
+            cdef char *data = <char *>self.thisptr().data.data()
+            cdef char[::1] mview = <char[:size:1]>(data)
+            return np.asarray(mview)
 
     def __repr__(self):
         return "<PCLPointCloud2>"
