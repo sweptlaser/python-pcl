@@ -1340,6 +1340,7 @@ cdef extern from "pcl/visualization/pcl_visualizer.h" namespace "pcl::visualizat
         #   */
         # bool setPointCloudRenderingProperties (int property, double val1, double val2, double val3, const std::string &id = "cloud", int viewport = 0);
         bool setPointCloudRenderingProperties (int property, double val1, double val2, double val3, string &id, int viewport)
+        bool setPointCloudRenderingProperties_TEST (int property, double val1, double val2, double val3, string &id, int viewport)
         
         # /** \brief Set the rendering properties of a PointCloud
         #  * \param[in] property the property type
@@ -3197,7 +3198,9 @@ cdef extern from "pcl/visualization/common/common.h" namespace "pcl::visualizati
         PCL_VISUALIZER_COLOR
         PCL_VISUALIZER_REPRESENTATION
         PCL_VISUALIZER_IMMEDIATE_RENDERING
-        # PCL_VISUALIZER_SHADING
+        PCL_VISUALIZER_SHADING
+        PCL_VISUALIZER_LUT
+        PCL_VISUALIZER_LUT_RANGE
 
 cdef extern from "pcl/visualization/common/common.h" namespace "pcl::visualization":
     cdef enum RenderingRepresentationProperties:
@@ -3211,6 +3214,16 @@ cdef extern from "pcl/visualization/common/common.h" namespace "pcl::visualizati
         PCL_VISUALIZER_SHADING_GOURAUD
         PCL_VISUALIZER_SHADING_PHONG
 
+cdef extern from "pcl/visualization/common/common.h" namespace "pcl::visualization":
+    cdef enum LookUpTableRepresentationProperties:
+        PCL_VISUALIZER_LUT_JET
+        PCL_VISUALIZER_LUT_JET_INVERSE
+        PCL_VISUALIZER_LUT_HSV
+        PCL_VISUALIZER_LUT_HSV_INVERSE
+        PCL_VISUALIZER_LUT_GREY
+        PCL_VISUALIZER_LUT_BLUE2RED
+        PCL_VISUALIZER_LUT_RANGE_AUTO
+        PCL_VISUALIZER_LUT_VIRIDIS
 ###############################################################################
 # Activation
 ###############################################################################

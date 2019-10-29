@@ -297,8 +297,17 @@ cdef class PCLVisualizering:
         _ch = pcl_vis._to_PointCloudColorHandler_PCLPointCloud2_Ptr_t(color_handler.thisptr_shared)
         self.thisptr().addPointCloud_PCLPointCloud2(cloud.thisptr_shared, _gh, _ch, _origin, _orientation, _id, viewport)
 
-    def SetPointCloudRenderingProperties(self, int propType, int propValue, propName = b'cloud'):
-        self.thisptr().setPointCloudRenderingProperties (propType, propValue, <string> propName, 0)
+    def SetPointCloudRenderingProperties(self, *pargs, **kwargs):
+        if (len(pargs) == 3):
+            self.SetPointCloudRenderingProperties_SingleValue(*pargs, **kwargs)
+        elif (len(pargs) == 5):
+            self.SetPointCloudRenderingProperties_ThreeValues(*pargs, **kwargs)
+
+    def SetPointCloudRenderingProperties_SingleValue(self, int propType, int propValue, propName = b'cloud'):
+        self.thisptr().setPointCloudRenderingProperties(propType, propValue, <string> propName, 0)
+
+    def SetPointCloudRenderingProperties_ThreeValues(self, int propType, int propValueA, int propValueB, int propValueC, propName = b'cloud'):
+        self.thisptr().setPointCloudRenderingProperties(propType, propValueA, propValueB, propValueC, <string> propName, 0)
 
     def InitCameraParameters(self):
         self.thisptr().initCameraParameters()
