@@ -109,8 +109,16 @@ cdef class PCLPointCloud2:
             cdef char[::1] mview = <char[:size:1]>(data)
             return np.asarray(mview)
 
+    property data_formatted:
+        def __get__(self):
+            return np.ndarray((self.width * self.height, len(self.fields)), np.float32, self.data)
+
     def __repr__(self):
         return "<PCLPointCloud2>"
+
+    def __getitem__(self, cnp.npy_intp nmidx):
+        all = np.ndarray((self.width * self.height, len(self.fields)), np.float32, self.data)
+        return all[nmidx]
 
 ###
 

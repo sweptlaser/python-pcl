@@ -32,9 +32,19 @@ cdef class PointCloudColorHandleringGenericField:
         # Shortcut to get raw pointer to underlying PointCloudColorHandlerGenericField<PointXYZ>.
         return <pcl_vis.PointCloudColorHandlerGenericField[cpp.PointXYZ] *> self.thisptr_shared.get()
 
+# class override(PointCloud)
+cdef class PointCloudColorHandleringRGBField:
+    cdef cpp.shared_bare_ptr thisptr_shared     # PointCloudColorHandlerRGBField[PointT]
+
+    # pcl_visualization_defs
+    cdef inline pcl_vis.PointCloudColorHandlerRGBField[cpp.PointXYZ] *thisptr(self) nogil:
+        # Shortcut to get raw pointer to underlying PointCloudColorHandlerCustom<PointXYZ>.
+        return <pcl_vis.PointCloudColorHandlerRGBField[cpp.PointXYZ] *> self.thisptr_shared.get()
+
 ctypedef fused PointCloudColorHandleringTypes:
     PointCloudColorHandleringCustom
     PointCloudColorHandleringGenericField
+    PointCloudColorHandleringRGBField
 
 cdef class PointCloudGeometryHandlering:
     cdef cpp.shared_bare_ptr thisptr_shared     # PointCloudGeometryHandler[PointT]
