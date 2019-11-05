@@ -1769,6 +1769,10 @@ cdef extern from "vtkPoints.h" nogil:
     cdef cppclass vtkPoints:
         vtkPoints()
 
+cdef extern from "vtkDataArray.h" nogil:
+    cdef cppclass vtkDataArray:
+        vtkDataArray()
+
 ###
 
 

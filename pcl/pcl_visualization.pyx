@@ -94,6 +94,7 @@ PCLVISUALIZER_LUT_VIRIDIS = pcl_vis.PCL_VISUALIZER_LUT_VIRIDIS
 # include "pxi/Common/RangeImage/RangeImages.pxi"
 
 # VTK - Handler(Color)
+include "pxi/Visualization/Handler/PointCloudColorHandlering.pxi"
 include "pxi/Visualization/Handler/PointCloudColorHandleringCustom.pxi"
 include "pxi/Visualization/Handler/PointCloudColorHandleringGenericField.pxi"
 include "pxi/Visualization/Handler/PointCloudColorHandleringHSVField.pxi"

@@ -14,6 +14,14 @@ from libcpp cimport bool
 # main
 cimport pcl_defs as cpp
 
+cdef class PointCloudColorHandlering:
+    cdef cpp.shared_bare_ptr thisptr_shared     # PointCloudColorHandler[PointT]
+    
+    # pcl_visualization_defs
+    cdef inline pcl_vis.PointCloudColorHandler[cpp.PointXYZ] *thisptr(self) nogil:
+        # Shortcut to get raw pointer to underlying PointCloudColorHandler<PointXYZ>.
+        return <pcl_vis.PointCloudColorHandler[cpp.PointXYZ] *> self.thisptr_shared.get()
+
 # class override(PointCloud)
 cdef class PointCloudColorHandleringCustom:
     cdef cpp.shared_bare_ptr thisptr_shared     # PointCloudColorHandlerCustom[PointT]
@@ -42,6 +50,7 @@ cdef class PointCloudColorHandleringRGBField:
         return <pcl_vis.PointCloudColorHandlerRGBField[cpp.PointXYZ] *> self.thisptr_shared.get()
 
 ctypedef fused PointCloudColorHandleringTypes:
+    PointCloudColorHandlering
     PointCloudColorHandleringCustom
     PointCloudColorHandleringGenericField
     PointCloudColorHandleringRGBField
