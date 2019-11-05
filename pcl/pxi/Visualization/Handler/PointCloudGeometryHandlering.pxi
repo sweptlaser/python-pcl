@@ -26,8 +26,8 @@ cdef class PointCloudGeometryHandlering:
         else:
             raise TypeError("currently only support PCLPointCloud2 point clouds")
     
-    #def __init__(self, pc):
-    #    self.cloud = pc
+    def __init__(self, pc):
+        self.cloud = pc
     
     def __assign_PCLPointCloud2__(self, _pcl.PCLPointCloud2 pc):
         sp_assign(self.thisptr_shared, <int*> new wrapper.PointCloudGeometryHandler_PCLPointCloud2(pc.thisptr_shared, <PyObject*>self, getGeometry_callback))
