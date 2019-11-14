@@ -60,7 +60,7 @@ cdef class PCLPointCloud2:
         
         # TODO: NG --> import pcl --> pyd Error(python shapedptr/C++ shard ptr collusion?)
         sp_assign(self.thisptr_shared, new cpp.PCLPointCloud2())
-        
+
         if init is None:
             return
         elif isinstance(init, (numbers.Integral, np.integer)):
@@ -69,7 +69,7 @@ cdef class PCLPointCloud2:
             self.from_array(init)
         elif isinstance(init, Sequence):
             self.from_list(init)
-        elif isinstance(init, type(self)):
+        elif isinstance(init, type(self)) or isinstance(init, PCLPointCloud2):
             other = init
             self.thisptr()[0] = other.thisptr()[0]
         else:
