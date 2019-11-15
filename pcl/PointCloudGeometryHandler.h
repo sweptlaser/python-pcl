@@ -19,15 +19,6 @@ class PointCloudGeometryHandler_PCLPointCloud2: public PointCloudGeometryHandler
             : PointCloudGeometryHandler<pcl::PCLPointCloud2>(cloud), m_pythonObject(object),
             m_pythonCallback(callback)
         {
-            field_x_idx_ = pcl::getFieldIndex (*cloud, "x");
-            if (field_x_idx_ == -1)
-                return;
-            field_y_idx_ = pcl::getFieldIndex (*cloud, "y");
-            if (field_y_idx_ == -1)
-                return;
-            field_z_idx_ = pcl::getFieldIndex (*cloud, "z");
-            if (field_z_idx_ == -1)
-                return;
             capable_ = true;
         }
 
