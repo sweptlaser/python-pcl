@@ -79,9 +79,11 @@ cdef class PCLPointCloud2:
     property width:
         """ property containing the width of the point cloud """
         def __get__(self): return self.thisptr().width
+        def __set__(self, width): self.thisptr().width = width
     property height:
         """ property containing the height of the point cloud """
         def __get__(self): return self.thisptr().height
+        def __set__(self, height): self.thisptr().height = height
     property is_dense:
         """ property containing whether the cloud is dense or not """
         def __get__(self): return self.thisptr().is_dense
