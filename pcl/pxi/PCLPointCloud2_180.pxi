@@ -108,6 +108,9 @@ cdef class PCLPointCloud2:
             cdef char *data = <char *>self.thisptr().data.data()
             cdef char[::1] mview = <char[:size:1]>(data)
             return np.asarray(mview)
+        def __set__(self, data):
+            # TODO: see if there is a way to do this without making a copy
+            self.thisptr().data = bytes(data)
 
     property data_formatted:
         def __get__(self):
