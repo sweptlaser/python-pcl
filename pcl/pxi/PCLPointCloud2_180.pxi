@@ -106,6 +106,7 @@ cdef class PCLPointCloud2:
     property point_step:
         """ property containing the step between point cloud datapoints """
         def __get__(self): return self.thisptr().point_step
+        def __set__(self, point_step): self.thisptr().point_step = point_step
     property row_step:
         """ property containing the step between point cloud rows """
         def __get__(self): return self.thisptr().row_step
