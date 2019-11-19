@@ -94,6 +94,15 @@ cdef class PCLPointCloud2:
             for f in self.thisptr().fields:
                 fields.append(PCLPointField(f.name, f.offset, f.datatype, f.count))
             return fields
+        def __set__(self, fields):
+            cdef cpp.PCLPointField _f
+            self.thisptr().fields.clear()
+            for f in fields:
+                _f.name = <string> f.name.encode("UTF-8")
+                _f.offset = f.offset
+                _f.datatype = f.datatype
+                _f.count = f.count
+                self.thisptr().fields.push_back(_f)
     property point_step:
         """ property containing the step between point cloud datapoints """
         def __get__(self): return self.thisptr().point_step
