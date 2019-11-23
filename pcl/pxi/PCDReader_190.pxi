@@ -77,7 +77,18 @@ cdef class PCDReader:
         ret['data_idx'] = data_idx
         return ret
     
-    def readBodyBinary(self, bytes data, PCLPointCloud2 pc not None, int pcd_version, bool compressed, unsigned int data_idx):
+    def readBodyBinary(self, data, PCLPointCloud2 pc not None, int pcd_version, bool compressed, unsigned int data_idx):
+        cdef const unsigned char *ptr
+        cdef Py_buffer buffer
         cdef int ok = -1
-        ok = self.thisptr().readBodyBinary (<const unsigned char *> data, deref(pc.thisptr()), pcd_version, compressed, data_idx)
+        if isinstance(data, memoryview):
+            PyObject_GetBuffer(data, &buffer, PyBUF_SIMPLE | PyBUF_ANY_CONTIGUOUS)
+            ptr = <const unsigned char *>buffer.buf
+        elif isinstance(data, bytes):
+            ptr = <const unsigned char *>data
+        else:
+            raise TypeError("Argument 'data' has incorrect type (expected bytes or memoryview, got %r)", data)
+        ok = self.thisptr().readBodyBinary(ptr, deref(pc.thisptr()), pcd_version, compressed, data_idx)
+        if isinstance(data, memoryview):
+            PyBuffer_Release(&buffer)
         return ok
