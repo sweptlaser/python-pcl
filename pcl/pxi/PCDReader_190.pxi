@@ -4,6 +4,7 @@ cimport pcl_io_180 as pcl_io
 cimport stream as stream
 
 from cython.operator cimport dereference as deref
+from cpython.buffer cimport PyObject_GetBuffer, PyBuffer_Release, PyBUF_ANY_CONTIGUOUS, PyBUF_SIMPLE
 
 from boost_shared_ptr cimport sp_assign
 
@@ -48,13 +49,25 @@ cdef class PCDReader:
         cdef stream.bufferstream* bufstream
         cdef cpp.Vector4f origin
         cdef cpp.Quaternionf orientation
+        cdef Py_buffer buffer
+        cdef char* ptr
+        cdef int size
         if isinstance(data, str):
             ok = self.thisptr().readHeader (<string> data.encode("UTF-8"), deref(pc.thisptr()),
                 origin, orientation, pcd_version, data_type, data_idx)
         else:
-            bufstream = new stream.bufferstream(<char*>data, len(data))
+            if isinstance(data, memoryview):
+                PyObject_GetBuffer(data, &buffer, PyBUF_SIMPLE | PyBUF_ANY_CONTIGUOUS)
+                ptr = <char*>buffer.buf
+                size = buffer.len
+            else:
+                ptr = <char*>data
+                size = len(data)
+            bufstream = new stream.bufferstream(ptr, size)
             ok = self.thisptr().readHeader (<stream.istream&> deref(bufstream), deref(pc.thisptr()),
                 origin, orientation, pcd_version, data_type, data_idx)
+            if isinstance(data, memoryview):
+                PyBuffer_Release(&buffer)
         if ok != 0: return None
         ret = {}
         ret['origin'] = np.array([origin.data()[0], origin.data()[1], origin.data()[2]])
