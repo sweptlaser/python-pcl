@@ -20,6 +20,12 @@ cdef class NormalEstimation:
     def __dealloc__(self):
         del self.me
 
+    def set_InputCloud(self, _pcl.PointCloud pc):
+        self.me.setInputCloud(<cpp.shared_ptr[cpp.PointCloud[cpp.PointXYZ]]> pc.thisptr_shared)
+        # cdef pcl_ftr.NormalEstimation_t *cNormalEstimation = <pcl_ftr.NormalEstimation_t *>normalEstimation.me
+        # cNormalEstimation.setInputCloud(<cpp.shared_ptr[cpp.PointCloud[cpp.PointXYZ]]> self.thisptr_shared)
+
+
     def set_SearchMethod(self, _pcl.KdTree kdtree):
         self.me.setSearchMethod(kdtree.thisptr_shared)
 
