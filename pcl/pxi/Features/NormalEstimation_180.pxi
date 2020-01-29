@@ -25,6 +25,15 @@ cdef class NormalEstimation:
         # cdef pcl_ftr.NormalEstimation_t *cNormalEstimation = <pcl_ftr.NormalEstimation_t *>normalEstimation.me
         # cNormalEstimation.setInputCloud(<cpp.shared_ptr[cpp.PointCloud[cpp.PointXYZ]]> self.thisptr_shared)
 
+    def set_ViewPoint(self, float vpx, float vpy, float vpz):
+        self.me.setViewPoint(vpx, vpy, vpz)
+
+    def get_ViewPoint(self, float vpx, float vpy, float vpz):
+        self.me.getViewPoint(vpx, vpy, vpz)
+        return vpx, vpy, vpz
+
+    def useSensorOriginAsViewPoint(self):
+        self.me.useSensorOriginAsViewPoint()
 
     def set_SearchMethod(self, _pcl.KdTree kdtree):
         self.me.setSearchMethod(kdtree.thisptr_shared)
