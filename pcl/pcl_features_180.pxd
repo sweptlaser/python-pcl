@@ -2289,6 +2289,33 @@ ctypedef shared_ptr[NormalEstimation[cpp.PointXYZ, cpp.Normal]] NormalEstimation
 ctypedef shared_ptr[NormalEstimation[cpp.PointXYZI, cpp.Normal]] NormalEstimation_PointXYZI_Ptr_t
 ctypedef shared_ptr[NormalEstimation[cpp.PointXYZRGB, cpp.Normal]] NormalEstimation_PointXYZRGB_Ptr_t
 ctypedef shared_ptr[NormalEstimation[cpp.PointXYZRGBA, cpp.Normal]] NormalEstimation_PointXYZRGBA_Ptr_t
+
+
+# template <typename PointInT, typename PointOutT>
+# class NormalEstimationOMP : public Feature<PointInT, PointOutT>
+cdef extern from "pcl/features/normal_3d_omp.h" namespace "pcl":
+    cdef cppclass NormalEstimationOMP[In, Out](NormalEstimation[In, Out]):
+
+        NormalEstimationOMP ()
+        # void computePointNormal (const cpp.PointCloud[In] &cloud, const vector[int] &indices, float &nx, float &ny, float &nz, float &curvature)
+
+        void setNumberOfThreads(unsigned int nr_threads)
+
+        # inline void setViewPoint (float vpx, float vpy, float vpz)
+
+        # inline void getViewPoint (float &vpx, float &vpy, float &vpz)
+
+        # inline void useSensorOriginAsViewPoint ()
+
+
+ctypedef NormalEstimationOMP[cpp.PointXYZ, cpp.Normal] NormalEstimationOMP_t
+ctypedef NormalEstimationOMP[cpp.PointXYZI, cpp.Normal] NormalEstimationOMP_PointXYZI_t
+ctypedef NormalEstimationOMP[cpp.PointXYZRGB, cpp.Normal] NormalEstimationOMP_PointXYZRGB_t
+ctypedef NormalEstimationOMP[cpp.PointXYZRGBA, cpp.Normal] NormalEstimationOMP_PointXYZRGBA_t
+ctypedef shared_ptr[NormalEstimationOMP[cpp.PointXYZ, cpp.Normal]] NormalEstimationOMPPtr_t
+ctypedef shared_ptr[NormalEstimationOMP[cpp.PointXYZI, cpp.Normal]] NormalEstimationOMP_PointXYZI_Ptr_t
+ctypedef shared_ptr[NormalEstimationOMP[cpp.PointXYZRGB, cpp.Normal]] NormalEstimationOMP_PointXYZRGB_Ptr_t
+ctypedef shared_ptr[NormalEstimationOMP[cpp.PointXYZRGBA, cpp.Normal]] NormalEstimationOMP_PointXYZRGBA_Ptr_t
 ###
 
 # template <typename PointInT>

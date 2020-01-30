@@ -52,6 +52,7 @@ include "SampleConsensus/SampleConsensusModelRegistration.pxi"
 include "SampleConsensus/SampleConsensusModelStick.pxi"
 # Features
 include "Features/NormalEstimation_180.pxi"
+include "Features/NormalEstimationOMP_180.pxi"
 include "Features/VFHEstimation_180.pxi"
 include "Features/IntegralImageNormalEstimation_180.pxi"
 include "Features/MomentOfInertiaEstimation_180.pxi"
