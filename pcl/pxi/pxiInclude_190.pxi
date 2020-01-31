@@ -28,7 +28,6 @@ include "Octree/OctreePointCloudChangeDetector_180.pxi"
 include "Filters/CropHull_180.pxi"
 include "Filters/CropBox_180.pxi"
 include "Filters/ProjectInliers_180.pxi"
-include "Filters/ExtractIndices_180.pxi"
 include "Filters/RadiusOutlierRemoval_180.pxi"
 include "Filters/ConditionAnd_180.pxi"
 # build error
