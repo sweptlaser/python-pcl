@@ -5,6 +5,7 @@
 include "Conversions_180.pxi"
 include "Vertices.pxi"
 include "PointXYZtoPointXYZ.pxi"
+include "Common/IO_180.pxi"
 # Segmentation
 include "Segmentation/Segmentation_180.pxi"
 include "Segmentation/SegmentationNormal_180.pxi"

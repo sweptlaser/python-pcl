@@ -16,10 +16,9 @@ def copyPointCloud (PCLPointCloud2 cloud_in, PCLPointCloud2 cloud_out):
     common.copyPointCloud (deref(cloud_in.thisptr()), deref(cloud_out.thisptr()))
 
 
-# TODO Make this happy, need to get the vector into the right type.
-# def copyPointCloud (PCLPointCloud2 cloud_in, object indices, PCLPointCloud2 cloud_out):
-#     cdef vector[int] vect
-#     for i in indices:
-#         vect.push_back(i)
-#
-#     common.copyPointCloud (deref(cloud_in.thisptr()), vect, deref(cloud_out.thisptr()))
+def copyPointCloud (PCLPointCloud2 cloud_in, object indices, PCLPointCloud2 cloud_out):
+    cdef vector[int] vect
+    for i in indices:
+        vect.push_back(i)
+
+    common.copyPointCloud (deref(cloud_in.thisptr()), vect, deref(cloud_out.thisptr()))

@@ -3168,7 +3168,7 @@ cdef extern from "pcl/common/angles.h" namespace "pcl":
 ###
 cdef extern from "pcl/common/io.h" namespace "pcl":
     void copyPointCloud (const cpp.PCLPointCloud2 &cloud_in, cpp.PCLPointCloud2 &cloud_out)
-    # void copyPointCloud (const cpp.PCLPointCloud2 &cloud_in, cpp.IndicesPtr_t indices, cpp.PCLPointCloud2 &cloud_out)
+    void copyPointCloud (const cpp.PCLPointCloud2 &cloud_in, vector[int] indices, cpp.PCLPointCloud2 &cloud_out)
 
 # cdef extern from "pcl/common/io.h" namespace "pcl":
 #     void copyPointCloud (const cpp.PCLPointCloud2 &cloud_in)
